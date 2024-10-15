@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: driver_school
+  profiles:
+    active: dev
