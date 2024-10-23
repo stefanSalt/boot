@@ -2,10 +2,10 @@ package com.lee.reservation.system.model.bo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
-import java.time.LocalDateTime;
+
+import java.io.Serializable;
 
 /**
  * 管理员

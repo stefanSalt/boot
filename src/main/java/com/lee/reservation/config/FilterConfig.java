@@ -4,7 +4,7 @@ import com.lee.reservation.common.filter.TokenFilter;
 import com.lee.reservation.common.token.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;  
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;  
   
 @Configuration

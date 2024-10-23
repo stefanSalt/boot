@@ -1,9 +1,9 @@
 package com.lee.reservation.system.mapper;
 
-import com.lee.reservation.system.model.entity.Admin;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lee.reservation.system.model.bo.AdminBO;
+import com.lee.reservation.system.model.entity.Admin;
 import com.lee.reservation.system.model.query.AdminPageQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

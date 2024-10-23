@@ -5,11 +5,10 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.lee.reservation.common.exception.BusinessException;
 import com.lee.reservation.common.token.model.entity.Token;
 import com.lee.reservation.common.token.service.TokenService;
-import jakarta.servlet.*;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;

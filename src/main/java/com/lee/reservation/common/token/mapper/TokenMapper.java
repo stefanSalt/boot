@@ -1,7 +1,7 @@
 package com.lee.reservation.common.token.mapper;
 
-import com.lee.reservation.common.token.model.entity.Token;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.lee.reservation.common.token.model.entity.Token;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
