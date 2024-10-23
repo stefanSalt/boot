@@ -8,9 +8,9 @@ import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
 /**
- * TODO
  *
- * @Date 2024-10-18 14:35
+ * <p>
+ * {@code @Date} 2024-10-18 14:35
  */
 @Component
 @Named("ConverterWorker")
