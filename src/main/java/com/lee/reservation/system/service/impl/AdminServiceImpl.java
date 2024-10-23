@@ -1,42 +1,36 @@
 package com.lee.reservation.system.service.impl;
 
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lee.reservation.common.constant.SystemConstant;
 import com.lee.reservation.common.exception.BusinessException;
+import com.lee.reservation.common.util.DateUtils;
 import com.lee.reservation.common.util.SystemUtils;
-import com.lee.reservation.system.model.entity.Admin;
+import com.lee.reservation.system.converter.AdminConverter;
 import com.lee.reservation.system.mapper.AdminMapper;
+import com.lee.reservation.system.model.bo.AdminBO;
+import com.lee.reservation.system.model.entity.Admin;
+import com.lee.reservation.system.model.form.AdminForm;
 import com.lee.reservation.system.model.form.PasswordChangeForm;
 import com.lee.reservation.system.model.form.ProfileForm;
+import com.lee.reservation.system.model.query.AdminPageQuery;
+import com.lee.reservation.system.model.vo.AdminPageVO;
 import com.lee.reservation.system.model.vo.AdminVO;
 import com.lee.reservation.system.model.vo.ProfileVO;
 import com.lee.reservation.system.service.AdminService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.lee.reservation.common.util.DateUtils;
-import com.lee.reservation.system.model.form.AdminForm;
-import com.lee.reservation.system.model.query.AdminPageQuery;
-import com.lee.reservation.system.model.bo.AdminBO;
-import com.lee.reservation.system.model.vo.AdminPageVO;
-import com.lee.reservation.system.converter.AdminConverter;
-
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.DigestUtils;
 
 import java.util.Arrays;
 import java.util.List;
-
-import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.StrUtil;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.DigestUtils;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * 管理员服务实现类
@@ -223,5 +217,14 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     public Admin getAdminByUsername(String username) {
         return this.getOne(new LambdaQueryWrapper<Admin>().eq(Admin::getUsername, username));
+    }
+
+    @Override
+    public String getAdminName(Integer userId) {
+        Admin admin = this.getById(userId);
+        if (admin != null) {
+            return admin.getNickname();
+        }
+        return null;
     }
 }

@@ -16,13 +16,14 @@ import com.lee.reservation.system.converter.StudentConverter;
 import com.lee.reservation.system.mapper.StudentMapper;
 import com.lee.reservation.system.model.bo.StudentBO;
 import com.lee.reservation.system.model.entity.Student;
-import com.lee.reservation.system.model.form.StudentForm;
 import com.lee.reservation.system.model.form.PasswordChangeForm;
 import com.lee.reservation.system.model.form.ProfileForm;
+import com.lee.reservation.system.model.form.StudentForm;
+import com.lee.reservation.system.model.option.StudentOption;
 import com.lee.reservation.system.model.query.StudentPageQuery;
+import com.lee.reservation.system.model.vo.ProfileVO;
 import com.lee.reservation.system.model.vo.StudentPageVO;
 import com.lee.reservation.system.model.vo.StudentVO;
-import com.lee.reservation.system.model.vo.ProfileVO;
 import com.lee.reservation.system.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ import java.util.List;
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements StudentService {
 
     @Autowired
-    private  StudentConverter StudentConverter;
+    private  StudentConverter studentConverter;
     @Autowired
     private StudentService studentService;
 
@@ -67,9 +68,16 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         Page<StudentBO> boPage = this.baseMapper.listPagedStudents(page, queryParams);
     
         // 实体转换
-        return StudentConverter.toPageVo(boPage);
+        return studentConverter.toPageVo(boPage);
     }
-    
+
+    @Override
+    public List<StudentOption> listStudents(StudentPageQuery queryParams) {
+        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("id","nickname");
+        return this.list(queryWrapper).stream().map(studentConverter::toOption).toList();
+    }
+
     /**
      * 获取学员表单数据
      *
@@ -79,7 +87,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Override
     public StudentForm getStudentFormData(Long id) {
         Student entity = this.getById(id);
-        return StudentConverter.toForm(entity);
+        return studentConverter.toForm(entity);
     }
     
     /**
@@ -91,7 +99,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Override
     public boolean saveStudent(StudentForm formData) {
         // 实体转换 form->entity
-        Student entity = StudentConverter.toEntity(formData);
+        Student entity = studentConverter.toEntity(formData);
         String passwordMD5 = DigestUtils.md5DigestAsHex(SystemConstant.DEFAULT_PASSWORD.getBytes());
         entity.setPassword(SystemConstant.DEFAULT_PASSWORD);
         return this.save(entity);
@@ -106,7 +114,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
      */
     @Override
     public boolean updateStudent(Long id,StudentForm formData) {
-        Student entity = StudentConverter.toEntity(formData);
+        Student entity = studentConverter.toEntity(formData);
         return this.updateById(entity);
     }
     
@@ -143,11 +151,19 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
     @Override
     public StudentVO getCurrentStudentInfo() {
+        return studentConverter.toVo(getCurrentStudent());
+    }
+
+    @Override
+    public Student getCurrentStudent() {
         String username = SystemUtils.getCurrentUsername();
         QueryWrapper<Student> StudentQueryWrapper = new QueryWrapper<>();
         StudentQueryWrapper.eq("username",username);
-        Student Student = this.getOne(StudentQueryWrapper);
-        return StudentConverter.toVo(Student);
+        Student student = this.getOne(StudentQueryWrapper);
+        if (student == null){
+            throw new BusinessException("用户不存在");
+        }
+        return student;
     }
 
     @Override
@@ -156,7 +172,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         QueryWrapper<Student> StudentQueryWrapper = new QueryWrapper<>();
         StudentQueryWrapper.eq("username",username);
         Student Student = this.getOne(StudentQueryWrapper);
-        return StudentConverter.toProfileVo(Student);
+        return studentConverter.toProfileVo(Student);
     }
 
     @Override
@@ -164,7 +180,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         String username = SystemUtils.getCurrentUsername();
         Student Student = this.getStudentByUsername(username);
         formData.setId(Student.getId());
-        Student entity = StudentConverter.toEntity(formData);
+        Student entity = studentConverter.toEntity(formData);
         return this.updateById(entity);
     }
 
@@ -217,5 +233,10 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
     public Student getStudentByUsername(String username) {
         return this.getOne(new LambdaQueryWrapper<Student>().eq(Student::getUsername, username));
+    }
+
+    @Override
+    public String getStudentNameById(Integer id) {
+        return getById(id).getNickname();
     }
 }

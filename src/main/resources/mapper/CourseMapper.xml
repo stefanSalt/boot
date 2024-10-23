@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.reservation.system.mapper.CourseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lee.reservation.system.model.entity.Course">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="description" property="description" />
+        <result column="type" property="type" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="location" property="location" />
+        <result column="status" property="status" />
+        <result column="duration_hours" property="durationHours" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, description, type, start_time, end_time, location, status, duration_hours
+    </sql>
+
+
+    <!-- 课程信息分页列表 -->
+    <select id="listPagedCourses" resultType="com.lee.reservation.system.model.bo.CourseBO">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            course
+        <where>
+            <if test='queryParams.name!=null and queryParams.name.trim() neq ""'>
+                AND (
+                    name LIKE CONCAT('%',#{queryParams.name},'%')
+                )
+            </if>
+            <if test="queryParams.startTime != null">
+                AND start_time &gt;= #{queryParams.startTime}
+            </if>
+            <if test="queryParams.endTime != null">
+                AND create_time &lt;= #{queryParams.endTime}
+            </if>
+                <if test="queryParams.status != null">
+                    AND status = #{queryParams.status}
+                </if>
+                <if test="queryParams.type != null">
+                    AND type = #{queryParams.type}
+                </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+</mapper>

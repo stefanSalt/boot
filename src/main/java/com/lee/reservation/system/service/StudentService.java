@@ -3,16 +3,19 @@ package com.lee.reservation.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lee.reservation.system.model.entity.Student;
-import com.lee.reservation.system.model.form.StudentForm;
 import com.lee.reservation.system.model.form.PasswordChangeForm;
 import com.lee.reservation.system.model.form.ProfileForm;
+import com.lee.reservation.system.model.form.StudentForm;
+import com.lee.reservation.system.model.option.StudentOption;
 import com.lee.reservation.system.model.query.StudentPageQuery;
+import com.lee.reservation.system.model.vo.ProfileVO;
 import com.lee.reservation.system.model.vo.StudentPageVO;
 import com.lee.reservation.system.model.vo.StudentVO;
-import com.lee.reservation.system.model.vo.ProfileVO;
+
+import java.util.List;
 
 /**
- * 管理员 服务类
+ * 学员 服务类
  *
  * @author baomidou
  * @since 2024-10-14
@@ -21,7 +24,7 @@ public interface StudentService extends IService<Student> {
 
 
     /**
-     *管理员分页列表
+     *分页列表
      *
      * @return
      */
@@ -29,7 +32,7 @@ public interface StudentService extends IService<Student> {
 
 
     /**
-     * 获取管理员表单数据
+     * 获取学员表单数据
      *
      * @param id 管理员ID
      * @return
@@ -66,6 +69,7 @@ public interface StudentService extends IService<Student> {
     void login(String username, String password);
 
     StudentVO getCurrentStudentInfo();
+    Student getCurrentStudent();
 
     ProfileVO getProfile();
 
@@ -74,4 +78,9 @@ public interface StudentService extends IService<Student> {
     boolean resetPassword(Integer userId, String password);
 
     boolean changePassword(PasswordChangeForm data);
+
+    String getStudentNameById(Integer id);
+
+
+    List<StudentOption> listStudents(StudentPageQuery queryParams);
 }

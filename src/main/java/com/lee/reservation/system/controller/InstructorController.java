@@ -6,6 +6,7 @@ import com.lee.reservation.common.result.Result;
 import com.lee.reservation.system.model.form.InstructorForm;
 import com.lee.reservation.system.model.form.PasswordChangeForm;
 import com.lee.reservation.system.model.form.ProfileForm;
+import com.lee.reservation.system.model.option.InstructorOption;
 import com.lee.reservation.system.model.query.InstructorPageQuery;
 import com.lee.reservation.system.model.vo.InstructorPageVO;
 import com.lee.reservation.system.model.vo.InstructorVO;
@@ -18,6 +19,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -40,6 +43,14 @@ public class InstructorController {
             IPage<InstructorPageVO> result = instructorService.listPagedInstructors(queryParams);
             return PageResult.success(result);
         }
+
+        @Operation(summary = "教练列表")
+        @GetMapping("/list")
+        public Result<List<InstructorOption>> listInstructors(InstructorPageQuery queryParams ) {
+            List<InstructorOption> result = instructorService.listInstructors(queryParams);
+            return Result.success(result);
+        }
+
 
         @GetMapping("/me")
         public Result<InstructorVO> getInstructorInfo() {

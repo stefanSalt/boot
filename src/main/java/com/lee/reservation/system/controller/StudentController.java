@@ -3,13 +3,14 @@ package com.lee.reservation.system.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.lee.reservation.common.result.PageResult;
 import com.lee.reservation.common.result.Result;
-import com.lee.reservation.system.model.form.StudentForm;
 import com.lee.reservation.system.model.form.PasswordChangeForm;
 import com.lee.reservation.system.model.form.ProfileForm;
+import com.lee.reservation.system.model.form.StudentForm;
+import com.lee.reservation.system.model.option.StudentOption;
 import com.lee.reservation.system.model.query.StudentPageQuery;
+import com.lee.reservation.system.model.vo.ProfileVO;
 import com.lee.reservation.system.model.vo.StudentPageVO;
 import com.lee.reservation.system.model.vo.StudentVO;
-import com.lee.reservation.system.model.vo.ProfileVO;
 import com.lee.reservation.system.service.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,6 +19,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -45,6 +48,13 @@ public class StudentController {
         public Result<StudentVO> getStudentInfo() {
             StudentVO currentStudentInfo = studentService.getCurrentStudentInfo();
             return Result.success(currentStudentInfo);
+        }
+
+        @Operation(summary = "学员列表")
+        @GetMapping("/list")
+        public Result<List<StudentOption>> listStudents(StudentPageQuery queryParams ) {
+            List<StudentOption> result = studentService.listStudents(queryParams);
+            return Result.success(result);
         }
 
     @Operation(summary = "获取个人中心用户信息")

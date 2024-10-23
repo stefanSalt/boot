@@ -19,6 +19,7 @@ import com.lee.reservation.system.model.entity.Instructor;
 import com.lee.reservation.system.model.form.InstructorForm;
 import com.lee.reservation.system.model.form.PasswordChangeForm;
 import com.lee.reservation.system.model.form.ProfileForm;
+import com.lee.reservation.system.model.option.InstructorOption;
 import com.lee.reservation.system.model.query.InstructorPageQuery;
 import com.lee.reservation.system.model.vo.InstructorPageVO;
 import com.lee.reservation.system.model.vo.InstructorVO;
@@ -69,7 +70,21 @@ public class InstructorServiceImpl extends ServiceImpl<InstructorMapper, Instruc
         // 实体转换
         return instructorConverter.toPageVo(boPage);
     }
-    
+
+    /**
+     * 获取教练 下拉列表
+     *
+     * @param queryParams 查询参数
+     * @return {@link List<InstructorOption>} 教练列表
+     */
+    @Override
+    public List<InstructorOption> listInstructors(InstructorPageQuery queryParams) {
+        QueryWrapper<Instructor> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("id","nickname");
+        List<Instructor> list = this.list(queryWrapper);
+        return list.stream().map(instructorConverter::toOption).toList();
+    }
+
     /**
      * 获取教练表单数据
      *
@@ -143,11 +158,19 @@ public class InstructorServiceImpl extends ServiceImpl<InstructorMapper, Instruc
 
     @Override
     public InstructorVO getCurrentInstructorInfo() {
+        return instructorConverter.toVo(getCurrentInstructor());
+    }
+
+    @Override
+    public Instructor getCurrentInstructor() {
         String username = SystemUtils.getCurrentUsername();
         QueryWrapper<Instructor> InstructorQueryWrapper = new QueryWrapper<>();
         InstructorQueryWrapper.eq("username",username);
         Instructor Instructor = this.getOne(InstructorQueryWrapper);
-        return instructorConverter.toVo(Instructor);
+        if (Instructor == null){
+            throw new RuntimeException("当前用户不存在");
+        }
+        return Instructor;
     }
 
     @Override
@@ -217,5 +240,10 @@ public class InstructorServiceImpl extends ServiceImpl<InstructorMapper, Instruc
 
     public Instructor getInstructorByUsername(String username) {
         return this.getOne(new LambdaQueryWrapper<Instructor>().eq(Instructor::getUsername, username));
+    }
+
+    @Override
+    public String getInstructorNameById(Integer id) {
+        return this.getById(id).getNickname();
     }
 }

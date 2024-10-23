@@ -3,11 +3,12 @@ package com.lee.reservation.system.converter;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lee.reservation.system.model.bo.StudentBO;
 import com.lee.reservation.system.model.entity.Student;
-import com.lee.reservation.system.model.form.StudentForm;
 import com.lee.reservation.system.model.form.ProfileForm;
+import com.lee.reservation.system.model.form.StudentForm;
+import com.lee.reservation.system.model.option.StudentOption;
+import com.lee.reservation.system.model.vo.ProfileVO;
 import com.lee.reservation.system.model.vo.StudentPageVO;
 import com.lee.reservation.system.model.vo.StudentVO;
-import com.lee.reservation.system.model.vo.ProfileVO;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -39,4 +40,6 @@ public interface StudentConverter {
     ProfileVO toProfileVo(Student entity);
 
     Student toEntity(ProfileForm entity);
+
+    StudentOption toOption(Student entity);
 }

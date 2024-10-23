@@ -1,13 +1,13 @@
 package com.lee.reservation.system.service;
 
-import com.lee.reservation.system.model.entity.Admin;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lee.reservation.system.model.entity.Admin;
 import com.lee.reservation.system.model.form.AdminForm;
 import com.lee.reservation.system.model.form.PasswordChangeForm;
 import com.lee.reservation.system.model.form.ProfileForm;
 import com.lee.reservation.system.model.query.AdminPageQuery;
 import com.lee.reservation.system.model.vo.AdminPageVO;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.lee.reservation.system.model.vo.AdminVO;
 import com.lee.reservation.system.model.vo.ProfileVO;
 
@@ -67,6 +67,7 @@ public interface AdminService extends IService<Admin> {
 
     AdminVO getCurrentAdminInfo();
 
+
     ProfileVO getProfile();
 
     boolean updateProfile(ProfileForm formData);
@@ -74,4 +75,6 @@ public interface AdminService extends IService<Admin> {
     boolean resetPassword(Integer userId, String password);
 
     boolean changePassword(PasswordChangeForm data);
+
+    String  getAdminName(Integer userId);
 }

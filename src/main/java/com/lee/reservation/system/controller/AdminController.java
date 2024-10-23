@@ -1,26 +1,23 @@
 package com.lee.reservation.system.controller;
 
-import com.lee.reservation.common.util.SystemUtils;
-import com.lee.reservation.system.model.form.PasswordChangeForm;
-import com.lee.reservation.system.model.form.ProfileForm;
-import com.lee.reservation.system.model.vo.AdminVO;
-import com.lee.reservation.system.model.vo.ProfileVO;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.lee.reservation.system.model.form.AdminForm;
-import com.lee.reservation.system.model.query.AdminPageQuery;
-import com.lee.reservation.system.model.vo.AdminPageVO;
-import com.lee.reservation.system.service.AdminService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.lee.reservation.common.result.PageResult;
 import com.lee.reservation.common.result.Result;
+import com.lee.reservation.system.model.form.AdminForm;
+import com.lee.reservation.system.model.form.PasswordChangeForm;
+import com.lee.reservation.system.model.form.ProfileForm;
+import com.lee.reservation.system.model.query.AdminPageQuery;
+import com.lee.reservation.system.model.vo.AdminPageVO;
+import com.lee.reservation.system.model.vo.AdminVO;
+import com.lee.reservation.system.model.vo.ProfileVO;
+import com.lee.reservation.system.service.AdminService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import jakarta.validation.Valid;
 
 
 /**
@@ -54,6 +51,7 @@ public class AdminController {
     @GetMapping("/profile")
     public Result<ProfileVO> getUserProfile() {
         ProfileVO userProfile = adminService.getProfile();
+
         return Result.success(userProfile);
     }
 

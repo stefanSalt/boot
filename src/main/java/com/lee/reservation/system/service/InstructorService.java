@@ -6,10 +6,13 @@ import com.lee.reservation.system.model.entity.Instructor;
 import com.lee.reservation.system.model.form.InstructorForm;
 import com.lee.reservation.system.model.form.PasswordChangeForm;
 import com.lee.reservation.system.model.form.ProfileForm;
+import com.lee.reservation.system.model.option.InstructorOption;
 import com.lee.reservation.system.model.query.InstructorPageQuery;
 import com.lee.reservation.system.model.vo.InstructorPageVO;
 import com.lee.reservation.system.model.vo.InstructorVO;
 import com.lee.reservation.system.model.vo.ProfileVO;
+
+import java.util.List;
 
 /**
  * 教练 服务类
@@ -67,6 +70,8 @@ public interface InstructorService extends IService<Instructor> {
 
     InstructorVO getCurrentInstructorInfo();
 
+    Instructor getCurrentInstructor();
+
     ProfileVO getProfile();
 
     boolean updateProfile(ProfileForm formData);
@@ -74,4 +79,8 @@ public interface InstructorService extends IService<Instructor> {
     boolean resetPassword(Integer userId, String password);
 
     boolean changePassword(PasswordChangeForm data);
+
+    List<InstructorOption> listInstructors(InstructorPageQuery queryParams);
+
+    String getInstructorNameById(Integer id);
 }

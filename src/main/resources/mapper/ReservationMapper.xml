@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.reservation.system.mapper.ReservationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lee.reservation.system.model.entity.Reservation">
+        <id column="id" property="id" />
+        <result column="instructor_id" property="instructorId" />
+        <result column="course_id" property="courseId" />
+        <result column="student_id" property="studentId" />
+        <result column="status" property="status" />
+        <result column="reservation_time" property="reservationTime" />
+        <result column="start_time" property="startTime" />
+        <result column="remark" property="remark" />
+        <result column="duration_hours" property="durationHours" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, instructor_id, course_id, student_id, status, reservation_time, start_time, remark, duration_hours
+    </sql>
+
+
+    <!-- 预约记录分页列表 -->
+    <select id="listPagedReservations" resultType="com.lee.reservation.system.model.bo.ReservationBO">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            reservation
+        <where>
+
+            <if test="queryParams.startTime != null">
+                AND startTime &gt;= #{queryParams.startTime}
+            </if>
+            <if test="queryParams.status !=null">
+                AND status = #{queryParams.status}
+            </if>
+                <if test="queryParams.studentId !=null">
+                    AND student_id = #{queryParams.studentId}
+                </if>
+                <if test="queryParams.instructorId !=null">
+                    AND instructor_id = #{queryParams.instructorId}
+                </if>
+                <if test="queryParams.courseId !=null">
+                    AND course_id = #{queryParams.courseId}
+                </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+    <select id="getDurationHoursByCourse"
+            resultType="com.lee.reservation.system.model.dto.DurationHoursStatistic">
+
+
+
+      -- 按天统计 7天内预约的学员数 月份-日期的格式
+
+      SELECT
+          date_format(start_time, '%m-%d') AS name,
+           count(student_id) AS num
+       FROM reservation
+       WHERE start_time &gt;= DATE_SUB(CURDATE(), INTERVAL 7 DAY) and status = 1 and start_time &lt;= CURDATE()
+       GROUP BY day(start_time)
+    </select>
+
+</mapper>

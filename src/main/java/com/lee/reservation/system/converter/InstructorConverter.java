@@ -5,6 +5,7 @@ import com.lee.reservation.system.model.bo.InstructorBO;
 import com.lee.reservation.system.model.entity.Instructor;
 import com.lee.reservation.system.model.form.InstructorForm;
 import com.lee.reservation.system.model.form.ProfileForm;
+import com.lee.reservation.system.model.option.InstructorOption;
 import com.lee.reservation.system.model.vo.InstructorPageVO;
 import com.lee.reservation.system.model.vo.InstructorVO;
 import com.lee.reservation.system.model.vo.ProfileVO;
@@ -39,4 +40,6 @@ public interface InstructorConverter {
     ProfileVO toProfileVo(Instructor entity);
 
     Instructor toEntity(ProfileForm entity);
+
+    InstructorOption toOption(Instructor entity);
 }

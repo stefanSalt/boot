@@ -37,7 +37,7 @@ public class FileController {
 
 
     @PostMapping
-    public Result<FileInfo> upload(MultipartFile file) throws IOException {
+    public Result<FileInfo> upload(@RequestParam MultipartFile file) throws IOException {
         String url=fileService.upload(fileUploadPath, file);
         FileInfo fileInfo = new FileInfo();
         fileInfo.setUrl(url);
