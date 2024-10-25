@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.selection.system.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.User">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="role_id" property="roleId" />
+        <result column="name" property="name" />
+        <result column="password" property="password" />
+        <result column="email" property="email" />
+        <result column="phone" property="phone" />
+        <result column="avatar" property="avatar" />
+        <result column="gender" property="gender" />
+        <result column="birthday" property="birthday" />
+        <result column="entry_date" property="entryDate" />
+        <result column="ID_card" property="idCard" />
+        <result column="clazz_id" property="clazzId" />
+        <result column="major_id" property="majorId" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, role_id, name, password, email, phone, avatar, gender, birthday, entry_date, ID_card, clazz_id, major_id, remark
+    </sql>
+
+
+    <!-- 包含  管理员  教师  学生等分页列表 -->
+    <select id="listPagedUsers" resultType="com.lee.selection.system.model.bo.UserBO">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            user
+        <where>
+            is_deleted = 0
+            <if test='queryParams.keywords!=null and queryParams.keywords.trim() neq ""'>
+                AND (
+                    name LIKE CONCAT('%',#{queryParams.keywords},'%')
+                )
+            </if>
+            <if test="queryParams.startTime != null">
+                AND create_time &gt;= #{queryParams.startTime}
+            </if>
+            <if test="queryParams.endTime != null">
+                AND create_time &lt;= #{queryParams.endTime}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+
+</mapper>

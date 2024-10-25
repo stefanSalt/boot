@@ -1,5 +1,8 @@
 package ${package.Controller};
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.lee.selection.common.result.PageResult;
+import com.lee.selection.common.result.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,9 +10,6 @@ import ${package.Parent}.model.form.${entity}Form;
 import ${package.Parent}.model.query.${entity}PageQuery;
 import ${package.Parent}.model.vo.${entity}PageVO;
 import ${package.Parent}.service.${table.serviceName};
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.lee.reservation.common.result.PageResult;
-import com.lee.reservation.common.result.Result;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;

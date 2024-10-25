@@ -3,7 +3,7 @@
 <mapper namespace="com.lee.reservation.system.mapper.CourseMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.reservation.system.model.entity.Course">
+    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.Course">
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="description" property="description" />
@@ -22,7 +22,7 @@
 
 
     <!-- 课程信息分页列表 -->
-    <select id="listPagedCourses" resultType="com.lee.reservation.system.model.bo.CourseBO">
+    <select id="listPagedCourses" resultType="com.lee.selection.system.model.bo.CourseBO">
         SELECT
             <include refid="Base_Column_List"/>
         FROM

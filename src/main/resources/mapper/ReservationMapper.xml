@@ -3,7 +3,7 @@
 <mapper namespace="com.lee.reservation.system.mapper.ReservationMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.reservation.system.model.entity.Reservation">
+    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.Reservation">
         <id column="id" property="id" />
         <result column="instructor_id" property="instructorId" />
         <result column="course_id" property="courseId" />
@@ -22,7 +22,7 @@
 
 
     <!-- 预约记录分页列表 -->
-    <select id="listPagedReservations" resultType="com.lee.reservation.system.model.bo.ReservationBO">
+    <select id="listPagedReservations" resultType="com.lee.selection.system.model.bo.ReservationBO">
         SELECT
             <include refid="Base_Column_List"/>
         FROM
@@ -48,7 +48,7 @@
         ORDER BY id DESC
     </select>
     <select id="getDurationHoursByCourse"
-            resultType="com.lee.reservation.system.model.dto.DurationHoursStatistic">
+            resultType="com.lee.selection.system.model.dto.DurationHoursStatistic">
 
 
 

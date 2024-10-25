@@ -3,7 +3,7 @@
 <mapper namespace="com.lee.reservation.system.mapper.AdminMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.reservation.system.model.entity.Admin">
+    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.Admin">
         <id column="id" property="id" />
         <result column="username" property="username" />
         <result column="nickname" property="nickname" />
@@ -24,7 +24,7 @@
 
 
     <!-- 管理员分页列表 -->
-    <select id="listPagedAdmins" resultType="com.lee.reservation.system.model.bo.AdminBO">
+    <select id="listPagedAdmins" resultType="com.lee.selection.system.model.bo.AdminBO">
         SELECT
             <include refid="Base_Column_List"/>
         FROM

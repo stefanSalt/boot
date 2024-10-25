@@ -1,6 +1,6 @@
 package ${package.Parent}.model.query;
 
-import com.lee.reservation.common.base.BasePageQuery;
+import com.lee.selection.common.base.BasePageQuery;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

@@ -1,5 +1,5 @@
 spring:
   application:
-    name: driver_school
+    name: course_selection
   profiles:
     active: dev

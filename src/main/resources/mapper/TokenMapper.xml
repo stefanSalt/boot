@@ -3,7 +3,7 @@
 <mapper namespace="com.lee.reservation.common.token.mapper.TokenMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.reservation.common.token.model.entity.Token">
+    <resultMap id="BaseResultMap" type="com.lee.selection.common.token.model.entity.Token">
         <id column="id" property="id" />
         <result column="token_type" property="tokenType" />
         <result column="token" property="token" />

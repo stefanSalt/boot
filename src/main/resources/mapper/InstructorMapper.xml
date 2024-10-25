@@ -3,7 +3,7 @@
 <mapper namespace="com.lee.reservation.system.mapper.InstructorMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.reservation.system.model.entity.Instructor">
+    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.Instructor">
         <id column="id" property="id" />
         <result column="username" property="username" />
         <result column="nickname" property="nickname" />
@@ -24,7 +24,7 @@
 
 
     <!-- 分页列表 -->
-    <select id="listPagedInstructors" resultType="com.lee.reservation.system.model.bo.InstructorBO">
+    <select id="listPagedInstructors" resultType="com.lee.selection.system.model.bo.InstructorBO">
         SELECT
             <include refid="Base_Column_List"/>
         FROM

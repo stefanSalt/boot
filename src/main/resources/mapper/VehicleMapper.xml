@@ -3,7 +3,7 @@
 <mapper namespace="com.lee.reservation.system.mapper.VehicleMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.reservation.system.model.entity.Vehicle">
+    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.Vehicle">
         <id column="id" property="id" />
         <result column="plate" property="plate" />
         <result column="color" property="color" />
@@ -21,7 +21,7 @@
 
 
     <!-- 车辆信息分页列表 -->
-    <select id="listPagedVehicles" resultType="com.lee.reservation.system.model.bo.VehicleBO">
+    <select id="listPagedVehicles" resultType="com.lee.selection.system.model.bo.VehicleBO">
         SELECT
             <include refid="Base_Column_List"/>
         FROM
