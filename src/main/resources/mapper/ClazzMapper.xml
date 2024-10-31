@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.selection.system.mapper.ClazzMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.Clazz">
+        <id column="id" property="id" />
+        <result column="parent_id" property="parentId" />
+        <result column="description" property="description" />
+        <result column="name" property="name" />
+        <result column="teacher_id" property="teacherId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, parent_id, description, name, teacher_id
+    </sql>
+
+
+    <!-- 班级分页列表 -->
+    <select id="listPagedClazzs" resultType="com.lee.selection.system.model.bo.ClazzBO">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            clazz
+        <where>
+
+            <if test='queryParams.keywords!=null and queryParams.keywords.trim() neq ""'>
+                AND (
+                    name LIKE CONCAT('%',#{queryParams.keywords},'%')
+                )
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+    <select id="listClazzes" resultType="com.lee.selection.system.model.bo.ClazzBO">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            clazz
+    </select>
+
+</mapper>
