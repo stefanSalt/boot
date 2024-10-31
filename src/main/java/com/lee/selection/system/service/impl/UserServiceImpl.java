@@ -5,12 +5,12 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lee.selection.common.util.DateUtils;
+import com.lee.selection.common.constant.SystemConstant;
 import com.lee.selection.common.util.SystemUtils;
-import com.lee.selection.system.model.entity.Admin;
 import com.lee.selection.system.model.entity.User;
 import com.lee.selection.system.mapper.UserMapper;
 import com.lee.selection.system.model.form.ProfileForm;
+import com.lee.selection.system.model.option.UserOption;
 import com.lee.selection.system.model.vo.UserProfileVO;
 import com.lee.selection.system.model.vo.UserVO;
 import com.lee.selection.system.service.UserService;
@@ -25,9 +25,10 @@ import com.lee.selection.system.converter.UserConverter;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * 包含  管理员  教师  学生等服务实现类
+ * 用户服务实现类
  *
  * @author baomidou
  * @since 2024-10-24
@@ -39,10 +40,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private final UserConverter userConverter;
 
     /**
-    * 获取包含  管理员  教师  学生等分页列表
+    * 获取用户分页列表
     *
     * @param queryParams 查询参数
-    * @return {@link IPage<UserPageVO>} 包含  管理员  教师  学生等分页列表
+    * @return {@link IPage<UserPageVO>} 用户分页列表
     */
     @Override
     public IPage<UserPageVO> listPagedUsers(UserPageQuery queryParams) {
@@ -53,7 +54,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Page<UserBO> page = new Page<>(pageNum, pageSize);
 
         // 格式化为数据库日期格式，避免日期比较使用格式化函数导致索引失效
-        DateUtils.toDatabaseFormat(queryParams, "startTime", "endTime");
+        //DateUtils.toDatabaseFormat(queryParams, "startTime", "endTime");
     
         // 查询数据
         Page<UserBO> boPage = this.baseMapper.listPagedUsers(page, queryParams);
@@ -63,9 +64,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
     
     /**
-     * 获取包含  管理员  教师  学生等表单数据
+     * 获取用户表单数据
      *
-     * @param id 包含  管理员  教师  学生等ID
+     * @param id 用户ID
      * @return
      */
     @Override
@@ -75,23 +76,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
     
     /**
-     * 新增包含  管理员  教师  学生等
+     * 新增用户
      *
-     * @param formData 包含  管理员  教师  学生等表单对象
+     * @param formData 用户表单对象
      * @return
      */
     @Override
     public boolean saveUser(UserForm formData) {
         // 实体转换 form->entity
         User entity = userConverter.toEntity(formData);
+        entity.setPassword(SystemConstant.DEFAULT_PASSWORD);
+        entity.setAvatar(SystemConstant.DEFAULT_AVATAR);
         return this.save(entity);
     }
     
     /**
-     * 更新包含  管理员  教师  学生等
+     * 更新用户
      *
-     * @param id   包含  管理员  教师  学生等ID
-     * @param formData 包含  管理员  教师  学生等表单对象
+     * @param id   用户ID
+     * @param formData 用户表单对象
      * @return
      */
     @Override
@@ -101,14 +104,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
     
     /**
-     * 删除包含  管理员  教师  学生等
+     * 删除用户
      *
-     * @param ids 包含  管理员  教师  学生等ID，多个以英文逗号(,)分割
+     * @param ids 用户ID，多个以英文逗号(,)分割
      * @return true|false
      */
     @Override
     public boolean deleteUsers(String ids) {
-        Assert.isTrue(StrUtil.isNotBlank(ids), "删除的包含  管理员  教师  学生等数据为空");
+        Assert.isTrue(StrUtil.isNotBlank(ids), "删除的用户数据为空");
         // 逻辑删除
         List<Long> idList = Arrays.stream(ids.split(","))
                 .map(Long::parseLong)
@@ -145,5 +148,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         formData.setId(user.getId());
         User entity = userConverter.toEntity(formData);
         return this.updateById(entity);
+    }
+
+    @Override
+    public List<UserOption> getOptions(Integer roleId) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("role_id",roleId)
+                .eq("status",1)
+                .select("id","name");
+        return list(queryWrapper).stream().map(userConverter::toOption).collect(Collectors.toList());
     }
 }

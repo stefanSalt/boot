@@ -5,24 +5,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
- * 用户分页查询对象
+ * 班级分页查询对象
  *
  * @author baomidou
- * @since 2024-10-24
+ * @since 2024-10-30
  */
-@Schema(description ="用户分页查询对象")
+@Schema(description ="班级分页查询对象")
 @Data
-public class UserPageQuery extends BasePageQuery {
+public class ClazzPageQuery extends BasePageQuery {
 
     @Schema(description="关键字")
     private String keywords;
-
-    private Integer roleId;
-
-    private Integer status;
-
-    private Integer majorId;
-
-    private Integer clazzId;
 
 }

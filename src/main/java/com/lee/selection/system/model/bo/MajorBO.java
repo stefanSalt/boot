@@ -1,23 +1,21 @@
-package com.lee.selection.system.model.entity;
+package com.lee.selection.system.model.bo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
- * 车辆类型实体
+ * 专业信息表
  *
  * @author baomidou
- * @since 2024-10-22
+ * @since 2024-10-25
  */
 @Getter
 @Setter
-@TableName("vehicle_type")
-public class VehicleType implements Serializable {
+public class MajorBO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,12 +26,22 @@ public class VehicleType implements Serializable {
     private Integer id;
 
     /**
+     * 编码
+     */
+    private String code;
+
+    /**
      * 名称
      */
     private String name;
 
     /**
-     * remark
+     * 所属上级节点
+     */
+    private Integer parentId;
+
+    /**
+     * 备注
      */
     private String remark;
 }

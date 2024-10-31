@@ -8,6 +8,7 @@ import com.lee.selection.system.model.vo.ProfileVO;
 import com.lee.selection.system.model.vo.UserProfileVO;
 import com.lee.selection.system.model.vo.UserVO;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Insert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.lee.selection.system.model.form.UserForm;
@@ -41,6 +42,12 @@ public class UserController {
         public PageResult<UserPageVO> listPagedUsers(UserPageQuery queryParams ) {
             IPage<UserPageVO> result = userService.listPagedUsers(queryParams);
             return PageResult.success(result);
+        }
+
+        @Operation(summary = "用户option列表")
+        @GetMapping("/options/{roleId}")
+        public Result listUsers(@PathVariable Integer roleId) {
+            return Result.success(userService.getOptions(roleId));
         }
 
     @GetMapping("/me")

@@ -5,14 +5,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
- * 车辆类型分页查询对象
+ * 专业信息表分页查询对象
  *
  * @author baomidou
- * @since 2024-10-22
+ * @since 2024-10-25
  */
-@Schema(description ="车辆类型分页查询对象")
+@Schema(description ="专业信息表分页查询对象")
 @Data
-public class VehicleTypePageQuery extends BasePageQuery {
+public class MajorPageQuery extends BasePageQuery {
 
     @Schema(description="关键字")
     private String keywords;

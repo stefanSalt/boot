@@ -4,54 +4,62 @@ package com.lee.selection.system.model.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 /**
- * 课程信息 DTO
+ * 课程信息表 DTO
  *
  * @author baomidou
- * @since 2024-10-17
+ * @since 2024-10-31
  */
 @Getter
 @Setter
-@Schema( description = "课程信息传输层对象")
+@Schema( description = "课程信息表传输层对象")
 public class CourseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-        @Schema(description = "id")
+        @Schema(description = "编号")
 
 private Integer id;
+
+        @Schema(description = "课程编号")
+
+private String code;
 
         @Schema(description = "课程名称")
 
 private String name;
 
-        @Schema(description = "课程描述")
+        @Schema(description = "学分")
 
-private String description;
+private Integer credit;
 
-        @Schema(description = "课程类型")
+        @Schema(description = "学时")
+
+private Integer duration;
+
+        @Schema(description = "所属专业")
+
+private Integer majorId;
+
+        @Schema(description = "考试分占中成绩的比值")
+
+private Integer examScoreRatio;
+
+        @Schema(description = "类型")
 
 private Integer type;
 
-        @Schema(description = "开始时间")
+        @Schema(description = "课程属性（必修  选修）")
+
+private Integer attribute;
+
+        @Schema(description = "开课时间")
 
 private LocalDateTime startTime;
 
-        @Schema(description = "结束时间")
-
-private LocalDateTime endTime;
-
-        @Schema(description = "上课地点")
-
-private String location;
-
-        @Schema(description = "0下架1上架2结束")
+        @Schema(description = "开课状态")
 
 private Integer status;
-
-
-private Integer durationHours;
 }

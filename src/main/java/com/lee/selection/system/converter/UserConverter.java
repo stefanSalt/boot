@@ -3,6 +3,7 @@ package com.lee.selection.system.converter;
 
 import com.lee.selection.system.model.entity.Admin;
 import com.lee.selection.system.model.form.ProfileForm;
+import com.lee.selection.system.model.option.UserOption;
 import com.lee.selection.system.model.vo.UserProfileVO;
 import com.lee.selection.system.model.vo.UserVO;
 import org.mapstruct.InheritInverseConfiguration;
@@ -66,5 +67,7 @@ public interface UserConverter {
     UserProfileVO toProfile(User entity);
 
     User toEntity(ProfileForm entity);
+
+    UserOption toOption(User entity);
 
 }

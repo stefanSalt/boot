@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lee.reservation.system.mapper.VehicleTypeMapper">
+<mapper namespace="com.lee.selection.system.mapper.MajorMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.VehicleType">
+    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.Major">
         <id column="id" property="id" />
+        <result column="code" property="code" />
         <result column="name" property="name" />
+        <result column="parent_id" property="parentId" />
         <result column="remark" property="remark" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, remark
+        id, code, name, parent_id, remark
     </sql>
 
 
-    <!-- 车辆类型分页列表 -->
-    <select id="listPagedVehicleTypes" resultType="com.lee.selection.system.model.bo.VehicleTypeBO">
+    <!-- 专业信息表分页列表 -->
+    <select id="listPagedMajors" resultType="com.lee.selection.system.model.bo.MajorBO">
         SELECT
             <include refid="Base_Column_List"/>
         FROM
-            vehicle_type
+            major
         <where>
             is_deleted = 0
             <if test='queryParams.keywords!=null and queryParams.keywords.trim() neq ""'>
@@ -36,6 +38,19 @@
             </if>
         </where>
         ORDER BY create_time DESC
+    </select>
+    <select id="listMajors" resultType="com.lee.selection.system.model.bo.MajorBO">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            major
+        <where>
+            <if test='keywords!=null and keywords.trim() neq ""'>
+                AND (
+                    name LIKE CONCAT('%',#{keywords},'%')
+                )
+            </if>
+        </where>
     </select>
 
 </mapper>

@@ -2,13 +2,13 @@ package com.lee.selection.system.converter;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lee.selection.system.model.entity.Role;
-import com.lee.selection.system.service.CourseService;
-import com.lee.selection.system.service.InstructorService;
-import com.lee.selection.system.service.RoleService;
-import com.lee.selection.system.service.StudentService;
+import com.lee.selection.system.model.entity.User;
+import com.lee.selection.system.service.*;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  *
@@ -19,9 +19,8 @@ import org.springframework.stereotype.Component;
 @Named("ConverterWorker")
 @RequiredArgsConstructor
 public class ConverterWorker {
-    private final StudentService studentService;
-    private final InstructorService instructorService;
-    private final CourseService courseService;
+
+
 
     private final RoleService roleService;
 
@@ -35,7 +34,7 @@ public class ConverterWorker {
     }
     @Named("getClazzName")
     public String getClazzName(Integer id) {
-//        return courseService.getCourseName(id);
+        //return courseService.getCourseName(id);
         return "1班";
     }
 
@@ -43,6 +42,16 @@ public class ConverterWorker {
     public String getMajorName(Integer id) {
         return "软件工程";
     }
+
+//    @Named("getTeachers")
+//    public List<Integer> getTeachers(Integer id) {
+//        return courseService.getTeacherIds(id);
+//    }
+
+//    @Named("getUserName")
+//    public String getUserName(Integer id) {
+//        return userService.getUserName(id);
+//    }
 
 
 //    @Named("getStudentName")

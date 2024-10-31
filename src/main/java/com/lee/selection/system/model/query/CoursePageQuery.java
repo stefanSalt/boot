@@ -18,7 +18,7 @@ import java.time.LocalDate;
 public class CoursePageQuery extends BasePageQuery {
 
     @Schema(description="名称")
-    private String name;
+    private String keywords;
 
     @Schema(description="状态")
     private Integer status;
@@ -27,12 +27,9 @@ public class CoursePageQuery extends BasePageQuery {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate startTime;
 
-    @Schema(description="结束时间")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate endTime;
-
-
     @Schema(description="课程类型")
     private Integer type;
+
+    private Integer majorId;
 
 }

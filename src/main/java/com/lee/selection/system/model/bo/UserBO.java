@@ -95,4 +95,6 @@ public class UserBO implements Serializable {
      * 备注
      */
     private String remark;
+
+    private Integer status;
 }

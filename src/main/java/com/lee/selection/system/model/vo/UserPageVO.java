@@ -12,14 +12,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 包含  管理员  教师  学生等 分页VO
+ * 用户 分页VO
  *
  * @author baomidou
  * @since 2024-10-24
  */
 @Getter
 @Setter
-@Schema(description = "包含  管理员  教师  学生等分页视图对象")
+@Schema(description = "用户分页视图对象")
 public class UserPageVO implements Serializable {
 
     private static final long serialVersionUID = 1L;

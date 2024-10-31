@@ -18,7 +18,6 @@ import com.lee.selection.system.model.query.ReservationCalendarQuery;
 import com.lee.selection.system.model.query.ReservationPageQuery;
 import com.lee.selection.system.model.vo.ReservationPageVO;
 import com.lee.selection.system.model.vo.ReservationVO;
-import com.lee.selection.system.service.CourseService;
 import com.lee.selection.system.service.InstructorService;
 import com.lee.selection.system.service.ReservationService;
 import com.lee.selection.system.service.StudentService;
@@ -44,7 +43,7 @@ public class ReservationServiceImpl extends ServiceImpl<ReservationMapper, Reser
 
     private final ReservationConverter reservationConverter;
     private final InstructorService instructorService;
-    private final CourseService courseService;
+//    private final CourseService courseService;
     private final StudentService studentService;
 
     /**

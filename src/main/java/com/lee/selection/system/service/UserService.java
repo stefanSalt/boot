@@ -4,14 +4,17 @@ import com.lee.selection.system.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lee.selection.system.model.form.ProfileForm;
 import com.lee.selection.system.model.form.UserForm;
+import com.lee.selection.system.model.option.UserOption;
 import com.lee.selection.system.model.query.UserPageQuery;
 import com.lee.selection.system.model.vo.UserPageVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.lee.selection.system.model.vo.UserProfileVO;
 import com.lee.selection.system.model.vo.UserVO;
 
+import java.util.List;
+
 /**
- * 包含  管理员  教师  学生等 服务类
+ * 用户 服务类
  *
  * @author baomidou
  * @since 2024-10-24
@@ -20,7 +23,7 @@ public interface UserService extends IService<User> {
 
 
     /**
-     *包含  管理员  教师  学生等分页列表
+     *用户分页列表
      *
      * @return
      */
@@ -28,36 +31,36 @@ public interface UserService extends IService<User> {
 
 
     /**
-     * 获取包含  管理员  教师  学生等表单数据
+     * 获取用户表单数据
      *
-     * @param id 包含  管理员  教师  学生等ID
+     * @param id 用户ID
      * @return
      */
      UserForm getUserFormData(Long id);
 
 
     /**
-     * 新增包含  管理员  教师  学生等
+     * 新增用户
      *
-     * @param formData 包含  管理员  教师  学生等表单对象
+     * @param formData 用户表单对象
      * @return
      */
     boolean saveUser(UserForm formData);
 
     /**
-     * 修改包含  管理员  教师  学生等
+     * 修改用户
      *
-     * @param id   包含  管理员  教师  学生等ID
-     * @param formData 包含  管理员  教师  学生等表单对象
+     * @param id   用户ID
+     * @param formData 用户表单对象
      * @return
      */
     boolean updateUser(Long id, UserForm formData);
 
 
     /**
-     * 删除包含  管理员  教师  学生等
+     * 删除用户
      *
-     * @param ids 包含  管理员  教师  学生等ID，多个以英文逗号(,)分割
+     * @param ids 用户ID，多个以英文逗号(,)分割
      * @return
      */
     boolean deleteUsers(String ids);
@@ -71,4 +74,6 @@ public interface UserService extends IService<User> {
     UserProfileVO getProfile();
 
     boolean updateProfile(ProfileForm formData);
+
+    List<UserOption> getOptions(Integer roleId);
 }

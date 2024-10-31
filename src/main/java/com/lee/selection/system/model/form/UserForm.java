@@ -83,4 +83,7 @@ public class UserForm implements Serializable {
     @Schema(description = "备注")
 
     private String remark;
+
+    @Schema(description = "状态")
+    private Integer status;
 }

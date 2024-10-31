@@ -1,58 +1,74 @@
 package com.lee.selection.system.model.form;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 /**
- * 课程信息 表单对象
+ * 课程信息表 表单对象
  *
  * @author baomidou
- * @since 2024-10-17
+ * @since 2024-10-31
  */
 @Getter
 @Setter
-@Schema(description = "课程信息表单对象")
+@Schema(description = "课程信息表表单对象")
 public class CourseForm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "id")
+        @Schema(description = "编号")
 
-    private Integer id;
+private Integer id;
 
-    @Schema(description = "课程名称")
+        @Schema(description = "课程编号")
 
-    private String name;
+private String code;
 
-    @Schema(description = "课程描述")
+        @Schema(description = "课程名称")
 
-    private String description;
+private String name;
 
-    @Schema(description = "课程类型")
+        @Schema(description = "学分")
 
-    private Integer type;
+private Integer credit;
 
-    @Schema(description = "开始时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime startTime;
+        @Schema(description = "学时")
 
-    @Schema(description = "结束时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime endTime;
+private Integer duration;
 
-    @Schema(description = "上课地点")
+        @Schema(description = "所属专业")
 
-    private String location;
+private Integer majorId;
 
-    @Schema(description = "0下架1上架2结束")
+        @Schema(description = "考试分占中成绩的比值")
 
-    private Integer status;
+private Integer examScoreRatio;
+
+        @Schema(description = "类型")
+
+private Integer type;
+
+        @Schema(description = "课程属性（必修  选修）")
+
+private Integer attribute;
+
+        @Schema(description = "开课时间")
+        @JsonFormat(pattern = "yyyy-MM-dd")
+private LocalDate startTime;
+
+        @Schema(description = "开课状态")
+
+private Integer status;
 
 
-    private Integer durationHours;
+        private List<Integer> teacherIds;
 }
