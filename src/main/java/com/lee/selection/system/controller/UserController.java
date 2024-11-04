@@ -50,10 +50,25 @@ public class UserController {
             return Result.success(userService.getOptions(roleId));
         }
 
+        @Operation(summary = "课程关联的教师列表")
+        @GetMapping("/teachers/{courseId}")
+        public Result listTeachers(@PathVariable Integer courseId) {
+            return Result.success(userService.getTeachersByCourseId(courseId));
+        }
+
     @GetMapping("/me")
     public Result<UserVO> getAdminInfo() {
         UserVO currentAdminInfo = userService.getCurrentUserInfo();
         return Result.success(currentAdminInfo);
+    }
+    @Operation(summary = "重置用户密码")
+    @PutMapping(value = "/{userId}/password/reset")
+    public Result<?> resetPassword(
+            @Parameter(description = "用户ID") @PathVariable Integer userId,
+            @RequestParam String password
+    ) {
+        boolean result = userService.resetPassword(userId, password);
+        return Result.judge(result);
     }
 
     @Operation(summary = "获取个人中心用户信息")

@@ -3,10 +3,12 @@ package com.lee.selection.system.service.impl;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lee.selection.common.constant.SystemConstant;
 import com.lee.selection.common.util.SystemUtils;
+import com.lee.selection.system.model.entity.Admin;
 import com.lee.selection.system.model.entity.User;
 import com.lee.selection.system.mapper.UserMapper;
 import com.lee.selection.system.model.form.ProfileForm;
@@ -157,5 +159,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .eq("status",1)
                 .select("id","name");
         return list(queryWrapper).stream().map(userConverter::toOption).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserOption> getTeachersByCourseId(Integer courseId) {
+        return this.baseMapper.getTeachersByCourseId(courseId);
+    }
+
+    @Override
+    public boolean resetPassword(Integer userId, String password) {
+        return this.update(new LambdaUpdateWrapper<User>()
+                .eq(User::getId, userId)
+                .set(User::getPassword, password)
+        );
     }
 }

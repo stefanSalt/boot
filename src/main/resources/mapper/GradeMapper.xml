@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.selection.system.mapper.GradeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.Grade">
+        <id column="id" property="id" />
+        <result column="student_id" property="studentId" />
+        <result column="grade" property="grade" />
+        <result column="grade_point" property="gradePoint" />
+        <result column="course_id" property="courseId" />
+        <result column="remark" property="remark" />
+        <result column="teacher_id" property="teacherId" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, student_id, grade, grade_point, course_id, remark, teacher_id,status
+    </sql>
+
+
+    <!-- 成绩分页列表 -->
+    <select id="listPagedGrades" resultType="com.lee.selection.system.model.bo.GradeBO">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            grade
+        <where>
+           <if test='queryParams.studentId!=null'>
+               AND student_id = #{queryParams.studentId}
+           </if>
+          <if test='queryParams.courseId!=null'>
+               AND course_id = #{queryParams.courseId}
+           </if>
+          <if test='queryParams.teacherId!=null'>
+               AND teacher_id = #{queryParams.teacherId}
+           </if>
+          <if test='queryParams.status!=null'>
+               AND status = #{queryParams.status}
+           </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+</mapper>

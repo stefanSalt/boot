@@ -39,6 +39,12 @@ public class CourseController {
             return PageResult.success(result);
         }
 
+        @Operation(summary = "课程列表")
+        @GetMapping("/list")
+        public Result listCourses() {
+            return Result.success(courseService.list());
+        }
+
         @Operation(summary = "新增课程信息表")
         @PostMapping
         public Result saveCourse(@RequestBody @Valid CourseForm formData ) {

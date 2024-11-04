@@ -57,5 +57,21 @@
         </where>
         ORDER BY id DESC
     </select>
+    <select id="getTeachersByCourseId" resultType="com.lee.selection.system.model.option.UserOption">
+        SELECT
+        id,name
+        FROM
+        user
+        WHERE
+        role_id=2
+        AND id IN (
+        SELECT
+        teacher_id
+        FROM
+        course_teacher
+        WHERE
+        course_id=#{courseId}
+        )
+    </select>
 
 </mapper>

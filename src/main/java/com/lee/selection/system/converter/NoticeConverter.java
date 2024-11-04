@@ -6,7 +6,6 @@ import com.lee.selection.system.model.entity.Notice;
 import com.lee.selection.system.model.form.NoticeForm;
 import com.lee.selection.system.model.vo.NoticePageVO;
 import com.lee.selection.system.model.vo.NoticeVO;
-import com.lee.selection.system.service.AdminService;
 import com.lee.selection.system.service.UserService;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;

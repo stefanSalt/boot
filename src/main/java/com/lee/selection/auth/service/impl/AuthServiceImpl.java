@@ -7,11 +7,7 @@ import com.lee.selection.auth.service.AuthService;
 import com.lee.selection.common.constant.SystemConstant;
 import com.lee.selection.common.token.service.TokenService;
 import com.lee.selection.system.model.dto.LoginResult;
-import com.lee.selection.system.model.entity.Admin;
 import com.lee.selection.system.model.entity.User;
-import com.lee.selection.system.service.AdminService;
-import com.lee.selection.system.service.InstructorService;
-import com.lee.selection.system.service.StudentService;
 import com.lee.selection.system.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +27,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Slf4j
 public class AuthServiceImpl implements AuthService {
     private final TokenService tokenService;
-    private final AdminService adminService;
-    private final InstructorService instructorService;
-    private final StudentService studentService;
+
     private final UserService userService;
 
 

@@ -76,4 +76,8 @@ public interface UserService extends IService<User> {
     boolean updateProfile(ProfileForm formData);
 
     List<UserOption> getOptions(Integer roleId);
+
+    List<UserOption> getTeachersByCourseId(Integer courseId);
+
+    boolean resetPassword(Integer userId, String password);
 }
