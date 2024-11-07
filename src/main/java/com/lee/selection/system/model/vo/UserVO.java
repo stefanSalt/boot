@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import com.lee.selection.system.enums.GenderEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,7 +55,7 @@ public class UserVO implements Serializable {
 
         @Schema(description = "性别")
 
-    private String genderLabel;
+    private Integer gender;
 
         @Schema(description = "出生年月")
 

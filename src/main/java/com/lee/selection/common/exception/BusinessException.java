@@ -1,7 +1,6 @@
 package com.lee.selection.common.exception;
 
 
-import com.lee.selection.common.result.IResultCode;
 import lombok.Getter;
 import org.slf4j.helpers.MessageFormatter;
 
@@ -14,12 +13,8 @@ import org.slf4j.helpers.MessageFormatter;
 @Getter
 public class BusinessException extends RuntimeException {
 
-    public IResultCode resultCode;
 
-    public BusinessException(IResultCode errorCode) {
-        super(errorCode.getMsg());
-        this.resultCode = errorCode;
-    }
+
 
     public BusinessException(String message, Throwable cause) {
         super(message, cause);

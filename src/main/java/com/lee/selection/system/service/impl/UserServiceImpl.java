@@ -7,22 +7,14 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lee.selection.common.constant.SystemConstant;
-import com.lee.selection.common.util.SystemUtils;
-import com.lee.selection.system.model.entity.Admin;
 import com.lee.selection.system.model.entity.User;
 import com.lee.selection.system.mapper.UserMapper;
-import com.lee.selection.system.model.form.ProfileForm;
-import com.lee.selection.system.model.option.UserOption;
 import com.lee.selection.system.model.vo.UserProfileVO;
 import com.lee.selection.system.model.vo.UserVO;
 import com.lee.selection.system.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.lee.selection.system.model.form.UserForm;
-import com.lee.selection.system.model.query.UserPageQuery;
-import com.lee.selection.system.model.bo.UserBO;
-import com.lee.selection.system.model.vo.UserPageVO;
 import com.lee.selection.system.converter.UserConverter;
 
 import java.util.Arrays;
@@ -48,21 +40,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     * @return {@link IPage<UserPageVO>} 用户分页列表
     */
     @Override
-    public IPage<UserPageVO> listPagedUsers(UserPageQuery queryParams) {
+    public IPage listPagedUsers(User queryParams, Integer pageNum, Integer pageSize) {
     
-        // 参数构建
-        int pageNum = queryParams.getPageNum();
-        int pageSize = queryParams.getPageSize();
-        Page<UserBO> page = new Page<>(pageNum, pageSize);
+
+        Page<User> page = new Page<>(pageNum, pageSize);
 
         // 格式化为数据库日期格式，避免日期比较使用格式化函数导致索引失效
         //DateUtils.toDatabaseFormat(queryParams, "startTime", "endTime");
     
         // 查询数据
-        Page<UserBO> boPage = this.baseMapper.listPagedUsers(page, queryParams);
+        Page<User> boPage = this.baseMapper.listPagedUsers(page, queryParams);
     
         // 实体转换
-        return userConverter.toPageVo(boPage);
+        return boPage;
     }
     
     /**
@@ -72,9 +62,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
-    public UserForm getUserFormData(Long id) {
+    public User getUserData(Long id) {
         User entity = this.getById(id);
-        return userConverter.toForm(entity);
+        return entity;
     }
     
     /**
@@ -84,12 +74,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
-    public boolean saveUser(UserForm formData) {
+    public boolean saveUser(User formData) {
         // 实体转换 form->entity
-        User entity = userConverter.toEntity(formData);
-        entity.setPassword(SystemConstant.DEFAULT_PASSWORD);
-        entity.setAvatar(SystemConstant.DEFAULT_AVATAR);
-        return this.save(entity);
+        formData.setPassword(SystemConstant.DEFAULT_PASSWORD);
+        formData.setAvatar(SystemConstant.DEFAULT_AVATAR);
+        return this.save(formData);
     }
     
     /**
@@ -100,9 +89,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
-    public boolean updateUser(Long id,UserForm formData) {
-        User entity = userConverter.toEntity(formData);
-        return this.updateById(entity);
+    public boolean updateUser(Long id,User formData) {
+        return this.updateById(formData);
     }
     
     /**
@@ -128,9 +116,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public User getCurrentUser() {
-        String username = SystemUtils.getCurrentUsername();
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code",username);
         return this.getOne(queryWrapper);
     }
 
@@ -145,26 +131,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public boolean updateProfile(ProfileForm formData) {
-        User user = this.getCurrentUser();
-        formData.setId(user.getId());
-        User entity = userConverter.toEntity(formData);
-        return this.updateById(entity);
+    public boolean updateProfile(User formData) {
+        return this.updateById(formData);
     }
 
-    @Override
-    public List<UserOption> getOptions(Integer roleId) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("role_id",roleId)
-                .eq("status",1)
-                .select("id","name");
-        return list(queryWrapper).stream().map(userConverter::toOption).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<UserOption> getTeachersByCourseId(Integer courseId) {
-        return this.baseMapper.getTeachersByCourseId(courseId);
-    }
 
     @Override
     public boolean resetPassword(Integer userId, String password) {

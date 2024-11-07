@@ -29,7 +29,7 @@
 
 
     <!-- 包含  管理员  教师  学生等分页列表 -->
-    <select id="listPagedUsers" resultType="com.lee.selection.system.model.bo.UserBO">
+    <select id="listPagedUsers" resultType="com.lee.selection.system.model.entity.User">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -44,34 +44,10 @@
             <if test='queryParams.roleId!=null'>
                 AND role_id = #{queryParams.roleId}
             </if>
-                <if test='queryParams.status!=null'>
-                    AND status = #{queryParams.status}
-                </if>
-                <if test='queryParams.majorId!=null'>
-                    AND major_id = #{queryParams.majorId}
-                </if>
-                <if test='queryParams.clazzId!=null'>
-                    AND clazz_id = #{queryParams.clazzId}
-                </if>
 
         </where>
         ORDER BY id DESC
     </select>
-    <select id="getTeachersByCourseId" resultType="com.lee.selection.system.model.option.UserOption">
-        SELECT
-        id,name
-        FROM
-        user
-        WHERE
-        role_id=2
-        AND id IN (
-        SELECT
-        teacher_id
-        FROM
-        course_teacher
-        WHERE
-        course_id=#{courseId}
-        )
-    </select>
+
 
 </mapper>

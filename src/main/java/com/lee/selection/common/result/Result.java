@@ -1,5 +1,6 @@
 package com.lee.selection.common.result;
 
+import com.lee.selection.common.constant.SystemConstant;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -25,18 +26,18 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> success(T data) {
         Result<T> result = new Result<>();
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMsg(ResultCode.SUCCESS.getMsg());
+        result.setCode(SystemConstant.RESULT_CODE_SUCCESS);
+        result.setMsg(SystemConstant.RESULT_MSG_SUCCESS);
         result.setData(data);
         return result;
     }
 
     public static <T> Result<T> failed() {
-        return result(ResultCode.SYSTEM_EXECUTION_ERROR.getCode(), ResultCode.SYSTEM_EXECUTION_ERROR.getMsg(), null);
+        return result(SystemConstant.RESULT_CODE_FAIL,SystemConstant.RESULT_MSG_FAIL, null);
     }
 
     public static <T> Result<T> failed(String msg) {
-        return result(ResultCode.SYSTEM_EXECUTION_ERROR.getCode(), msg, null);
+        return result(SystemConstant.RESULT_CODE_FAIL, msg, null);
     }
 
     public static <T> Result<T> judge(boolean status) {
@@ -47,17 +48,8 @@ public class Result<T> implements Serializable {
         }
     }
 
-    public static <T> Result<T> failed(IResultCode resultCode) {
-        return result(resultCode.getCode(), resultCode.getMsg(), null);
-    }
 
-    public static <T> Result<T> failed(IResultCode resultCode, String msg) {
-        return result(resultCode.getCode(), msg, null);
-    }
 
-    private static <T> Result<T> result(IResultCode resultCode, T data) {
-        return result(resultCode.getCode(), resultCode.getMsg(), data);
-    }
 
     private static <T> Result<T> result(String code, String msg, T data) {
         Result<T> result = new Result<>();
@@ -67,7 +59,4 @@ public class Result<T> implements Serializable {
         return result;
     }
 
-    public static boolean isSuccess(Result<?> result) {
-        return result != null && ResultCode.SUCCESS.getCode().equals(result.getCode());
-    }
 }

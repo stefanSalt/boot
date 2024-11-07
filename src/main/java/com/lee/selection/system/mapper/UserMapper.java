@@ -3,9 +3,6 @@ package com.lee.selection.system.mapper;
 import com.lee.selection.system.model.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lee.selection.system.model.bo.UserBO;
-import com.lee.selection.system.model.option.UserOption;
-import com.lee.selection.system.model.query.UserPageQuery;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -27,7 +24,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @param queryParams 查询参数
      * @return
      */
-    Page<UserBO> listPagedUsers(Page<UserBO> page, UserPageQuery queryParams);
+    Page<User> listPagedUsers(Page<User> page, User queryParams);
 
-    List<UserOption> getTeachersByCourseId(Integer courseId);
+
 }

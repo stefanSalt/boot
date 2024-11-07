@@ -11,11 +11,7 @@ import ${package.Service}.${table.serviceName};
 import ${superServiceImplClassPackage};
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ${package.Parent}.model.form.${entity}Form;
-import ${package.Parent}.model.query.${entity}PageQuery;
-import ${package.Parent}.model.bo.${entity}BO;
-import ${package.Parent}.model.vo.${entity}PageVO;
-import ${package.Parent}.converter.${entity}Converter;
+import ${package.Parent}.model.entity.${entity};
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,30 +27,30 @@ import cn.hutool.core.util.StrUtil;
 @RequiredArgsConstructor
 public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
 
-    private final ${entity}Converter ${firstCharLowerCaseEntity}Converter;
 
     /**
     * 获取$!{table.comment}分页列表
     *
     * @param queryParams 查询参数
-    * @return {@link IPage<${entity}PageVO>} $!{table.comment}分页列表
+    * @param pageNum 页号
+     * @param pageSize 页大小
+     *
+    * @return {@link IPage<${entity}>} $!{table.comment}分页列表
     */
     @Override
-    public IPage<${entity}PageVO> listPaged${entity}s(${entity}PageQuery queryParams) {
+    public IPage<${entity}> listPaged${entity}s(${entity} queryParams, Integer pageNum, Integer pageSize) {
     
-        // 参数构建
-        int pageNum = queryParams.getPageNum();
-        int pageSize = queryParams.getPageSize();
-        Page<${entity}BO> page = new Page<>(pageNum, pageSize);
+
+        Page<${entity}> page = new Page<>(pageNum, pageSize);
 
         // 格式化为数据库日期格式，避免日期比较使用格式化函数导致索引失效
-        DateUtils.toDatabaseFormat(queryParams, "startTime", "endTime");
+        //DateUtils.toDatabaseFormat(queryParams, "startTime", "endTime");
     
         // 查询数据
-        Page<${entity}BO> boPage = this.baseMapper.listPaged${entity}s(page, queryParams);
+        Page<${entity}> boPage = this.baseMapper.listPaged${entity}s(page, queryParams);
     
         // 实体转换
-        return ${firstCharLowerCaseEntity}Converter.toPageVo(boPage);
+        return boPage;
     }
     
     /**
@@ -64,9 +60,9 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @return
      */
     @Override
-    public ${entity}Form get${entity}FormData(Long id) {
+    public ${entity} get${entity}Data(Long id) {
         ${entity} entity = this.getById(id);
-        return ${firstCharLowerCaseEntity}Converter.toForm(entity);
+        return entity;
     }
     
     /**
@@ -76,10 +72,9 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @return
      */
     @Override
-    public boolean save${entity}(${entity}Form formData) {
-        // 实体转换 form->entity
-        ${entity} entity = ${firstCharLowerCaseEntity}Converter.toEntity(formData);
-        return this.save(entity);
+    public boolean save${entity}(${entity} formData) {
+
+        return this.save(formData);
     }
     
     /**
@@ -90,9 +85,8 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
      * @return
      */
     @Override
-    public boolean update${entity}(Long id,${entity}Form formData) {
-        ${entity} entity = ${firstCharLowerCaseEntity}Converter.toEntity(formData);
-        return this.updateById(entity);
+    public boolean update${entity}(Long id,${entity} formData) {
+        return this.updateById(formData);
     }
     
     /**

@@ -2,11 +2,6 @@ package com.lee.selection.system.service;
 
 import com.lee.selection.system.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lee.selection.system.model.form.ProfileForm;
-import com.lee.selection.system.model.form.UserForm;
-import com.lee.selection.system.model.option.UserOption;
-import com.lee.selection.system.model.query.UserPageQuery;
-import com.lee.selection.system.model.vo.UserPageVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.lee.selection.system.model.vo.UserProfileVO;
 import com.lee.selection.system.model.vo.UserVO;
@@ -27,7 +22,7 @@ public interface UserService extends IService<User> {
      *
      * @return
      */
-    IPage<UserPageVO> listPagedUsers(UserPageQuery queryParams);
+    IPage listPagedUsers(User queryParams, Integer pageNum, Integer pageSize);
 
 
     /**
@@ -36,7 +31,7 @@ public interface UserService extends IService<User> {
      * @param id 用户ID
      * @return
      */
-     UserForm getUserFormData(Long id);
+     User getUserData(Long id);
 
 
     /**
@@ -45,7 +40,7 @@ public interface UserService extends IService<User> {
      * @param formData 用户表单对象
      * @return
      */
-    boolean saveUser(UserForm formData);
+    boolean saveUser(User formData);
 
     /**
      * 修改用户
@@ -54,7 +49,7 @@ public interface UserService extends IService<User> {
      * @param formData 用户表单对象
      * @return
      */
-    boolean updateUser(Long id, UserForm formData);
+    boolean updateUser(Long id, User formData);
 
 
     /**
@@ -73,11 +68,8 @@ public interface UserService extends IService<User> {
 
     UserProfileVO getProfile();
 
-    boolean updateProfile(ProfileForm formData);
-
-    List<UserOption> getOptions(Integer roleId);
-
-    List<UserOption> getTeachersByCourseId(Integer courseId);
+    boolean updateProfile(User formData);
+    
 
     boolean resetPassword(Integer userId, String password);
 }

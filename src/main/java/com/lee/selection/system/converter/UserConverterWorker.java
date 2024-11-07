@@ -1,6 +1,5 @@
 package com.lee.selection.system.converter;
 
-import com.lee.selection.system.model.entity.Role;
 import com.lee.selection.system.service.*;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Named;

@@ -21,7 +21,7 @@ import java.util.List;
 public class SystemCodeGenerator {
 
     private static final DataSourceConfig.Builder DATA_SOURCE_CONFIG = new DataSourceConfig
-            .Builder("jdbc:mysql://localhost:3306/course_selection?serverTimezone=Asia/Shanghai", "root", "1234");
+            .Builder("jdbc:mysql://localhost:3306/recruit?serverTimezone=Asia/Shanghai", "root", "1234");
 
     /**
      * 执行 run
@@ -51,13 +51,13 @@ public class SystemCodeGenerator {
                     List<CustomFile> customFiles = new ArrayList<>();
 //                    customFiles.add(new CustomFile.Builder().fileName("index.vue").templatePath("/templates/index.vue.vm").packageName("vue").build());
 //                    customFiles.add(new CustomFile.Builder().fileName(".ts").templatePath("/templates/api.ts.vm").packageName("vue").build());
-                   customFiles.add(new CustomFile.Builder().fileName("VO.java").templatePath("/templates/vo.java.vm").packageName("model.vo").build());
-                   customFiles.add(new CustomFile.Builder().fileName("DTO.java").templatePath("/templates/dto.java.vm").packageName("model.dto").build());
-                   customFiles.add(new CustomFile.Builder().fileName("BO.java").templatePath("/templates/bo.java.vm").packageName("model.bo").build());
-                   customFiles.add(new CustomFile.Builder().fileName("PageQuery.java").templatePath("/templates/pageQuery.java.vm").packageName("model.query").build());
-                   customFiles.add(new CustomFile.Builder().fileName("PageVO.java").templatePath("/templates/pageVO.java.vm").packageName("model.vo").build());
-                   customFiles.add(new CustomFile.Builder().fileName("Form.java").templatePath("/templates/form.java.vm").packageName("model.form").build());
-                   customFiles.add(new CustomFile.Builder().fileName("Converter.java").templatePath("/templates/converter.java.vm").packageName("converter").build());
+//                   customFiles.add(new CustomFile.Builder().fileName("VO.java").templatePath("/templates/vo.java.vm").packageName("model.vo").build());
+//                   customFiles.add(new CustomFile.Builder().fileName("DTO.java").templatePath("/templates/dto.java.vm").packageName("model.dto").build());
+//                   customFiles.add(new CustomFile.Builder().fileName("BO.java").templatePath("/templates/bo.java.vm").packageName("model.bo").build());
+//                   customFiles.add(new CustomFile.Builder().fileName("PageQuery.java").templatePath("/templates/pageQuery.java.vm").packageName("model.query").build());
+//                   customFiles.add(new CustomFile.Builder().fileName("PageVO.java").templatePath("/templates/pageVO.java.vm").packageName("model.vo").build());
+//                   customFiles.add(new CustomFile.Builder().fileName("Form.java").templatePath("/templates/form.java.vm").packageName("model.form").build());
+//                   customFiles.add(new CustomFile.Builder().fileName("Converter.java").templatePath("/templates/converter.java.vm").packageName("converter").build());
                     consumer.customFile(customFiles);
                     consumer.beforeOutputFile((tableInfo, objectMap) -> {
                         // 为每个表生成首字母小写的实体名
@@ -77,7 +77,7 @@ public class SystemCodeGenerator {
                             builder.entityBuilder()
                                     .enableLombok() // 是否使用lombok
                                     //.enableFileOverride() // 开启覆盖已生成的文件
-                                    .logicDeleteColumnName("deleted") // 逻辑删除字段名
+                                   // .logicDeleteColumnName("deleted") // 逻辑删除字段名
                                     .enableRemoveIsPrefix() // 开启移除is前缀
                             ;
 
@@ -89,6 +89,8 @@ public class SystemCodeGenerator {
                             builder.serviceBuilder()
                                     .formatServiceFileName("%sService"
                                     );
+                            builder.controllerBuilder()
+                                            .enableFileOverride();
 
 
                             builder.addTablePrefix("sys_") // 过滤移除表前缀 sys_user 表生成的实体类 User.java

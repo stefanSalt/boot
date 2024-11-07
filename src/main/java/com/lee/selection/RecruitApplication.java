@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class CourseSelectionApplication {
+public class RecruitApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CourseSelectionApplication.class, args);
+        SpringApplication.run(RecruitApplication.class, args);
     }
 
 }

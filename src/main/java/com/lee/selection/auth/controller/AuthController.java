@@ -1,4 +1,4 @@
-package com.lee.selection.auth.service.controller;
+package com.lee.selection.auth.controller;
 
 import com.lee.selection.auth.service.AuthService;
 import com.lee.selection.common.result.Result;
