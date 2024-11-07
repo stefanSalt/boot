@@ -60,16 +60,15 @@ public interface UserService extends IService<User> {
      */
     boolean deleteUsers(String ids);
 
-    UserVO getCurrentUserInfo();
 
-    User getCurrentUser();
 
     String getUserName(Integer id);
 
-    UserProfileVO getProfile();
 
     boolean updateProfile(User formData);
     
 
     boolean resetPassword(Integer userId, String password);
+
+    User getUserByUsername(String username);
 }

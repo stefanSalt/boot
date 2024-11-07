@@ -21,7 +21,7 @@ import java.util.List;
 public class SystemCodeGenerator {
 
     private static final DataSourceConfig.Builder DATA_SOURCE_CONFIG = new DataSourceConfig
-            .Builder("jdbc:mysql://localhost:3306/recruit?serverTimezone=Asia/Shanghai", "root", "1234");
+            .Builder("jdbc:mysql://localhost:3306/stu_recruit?serverTimezone=Asia/Shanghai", "root", "1234");
 
     /**
      * 执行 run
@@ -89,8 +89,7 @@ public class SystemCodeGenerator {
                             builder.serviceBuilder()
                                     .formatServiceFileName("%sService"
                                     );
-                            builder.controllerBuilder()
-                                            .enableFileOverride();
+
 
 
                             builder.addTablePrefix("sys_") // 过滤移除表前缀 sys_user 表生成的实体类 User.java

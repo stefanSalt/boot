@@ -3,10 +3,12 @@ package com.lee.selection.system.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import com.lee.selection.common.result.Result;
+import com.lee.selection.common.token.service.TokenService;
 import com.lee.selection.system.model.entity.User;
 
 import com.lee.selection.system.model.vo.UserProfileVO;
 import com.lee.selection.system.model.vo.UserVO;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +35,8 @@ public class UserController {
 
         private final UserService userService;
 
+        private final TokenService tokenService;
+
         @Operation(summary = "用户 分页列表")
         @GetMapping("/page")
         public Result listPagedUsers(@RequestParam(defaultValue = "1") Integer pageNum,
@@ -44,9 +48,12 @@ public class UserController {
 
 
     @GetMapping("/me")
-    public Result<UserVO> getAdminInfo() {
-        UserVO currentAdminInfo = userService.getCurrentUserInfo();
-        return Result.success(currentAdminInfo);
+    public Result getUserInfo(HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+        String token = authorization.replace("Bearer ", "");
+        String username = tokenService.getUsernameFromToken(token);
+        User user = userService.getUserByUsername(username);
+        return Result.success(user);
     }
     @Operation(summary = "重置用户密码")
     @PutMapping(value = "/{userId}/password/reset")
@@ -60,10 +67,13 @@ public class UserController {
 
     @Operation(summary = "获取个人中心用户信息")
     @GetMapping("/profile")
-    public Result<UserProfileVO> getUserProfile() {
-        UserProfileVO userProfile = userService.getProfile();
+    public Result getUserProfile(HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+        String token = authorization.replace("Bearer ", "");
+        String username = tokenService.getUsernameFromToken(token);
+        User user = userService.getUserByUsername(username);
 
-        return Result.success(userProfile);
+        return Result.success(user);
     }
 
     @Operation(summary = "修改个人中心用户信息")

@@ -37,7 +37,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     * 获取用户分页列表
     *
     * @param queryParams 查询参数
-    * @return {@link IPage<UserPageVO>} 用户分页列表
+    * @return 用户分页列表
     */
     @Override
     public IPage listPagedUsers(User queryParams, Integer pageNum, Integer pageSize) {
@@ -45,9 +45,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         Page<User> page = new Page<>(pageNum, pageSize);
 
-        // 格式化为数据库日期格式，避免日期比较使用格式化函数导致索引失效
-        //DateUtils.toDatabaseFormat(queryParams, "startTime", "endTime");
-    
         // 查询数据
         Page<User> boPage = this.baseMapper.listPagedUsers(page, queryParams);
     
@@ -109,26 +106,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return this.removeByIds(idList);
     }
 
-    @Override
-    public UserVO getCurrentUserInfo() {
-        return userConverter.toVo(getCurrentUser());
-    }
 
-    @Override
-    public User getCurrentUser() {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        return this.getOne(queryWrapper);
-    }
+
 
     @Override
     public String getUserName(Integer id) {
         return this.getById(id).getName();
     }
 
-    @Override
-    public UserProfileVO getProfile() {
-        return userConverter.toProfile(getCurrentUser());
-    }
+
 
     @Override
     public boolean updateProfile(User formData) {
@@ -142,5 +128,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .eq(User::getId, userId)
                 .set(User::getPassword, password)
         );
+    }
+
+
+    @Override
+    public User getUserByUsername(String username) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username",username);
+        return this.getOne(queryWrapper);
     }
 }
