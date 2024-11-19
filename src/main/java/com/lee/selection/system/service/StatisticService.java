@@ -8,6 +8,6 @@ import com.lee.selection.system.model.dto.StatisticDTO;
  * @Date 2024-10-22 14:47
  */
 public interface StatisticService {
-    StatisticDTO getDurationHoursByCourse();
+    StatisticDTO getApplysByCourse();
 
 }

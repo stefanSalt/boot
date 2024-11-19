@@ -1,11 +1,15 @@
 package com.lee.selection.system.mapper;
 
+import com.lee.selection.system.model.dto.ApplyStatisticDTO;
+import com.lee.selection.system.model.dto.StatisticDTO;
 import com.lee.selection.system.model.entity.Apply;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lee.selection.system.model.bo.ApplyBO;
 import com.lee.selection.system.model.query.ApplyPageQuery;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * 申请表 Mapper 接口
@@ -25,5 +29,7 @@ public interface ApplyMapper extends BaseMapper<Apply> {
      * @return
      */
     Page<ApplyBO> listPagedApplys(Page<ApplyBO> page, ApplyPageQuery queryParams);
+
+    List<ApplyStatisticDTO> getCountsByCourse();
 
 }

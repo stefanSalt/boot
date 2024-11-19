@@ -28,7 +28,7 @@ public class StatisticController {
     @Operation(summary = "学员个人课时时数统计")
     @GetMapping("/durationHoursByCourse")
     public Result getDurationHoursByCourse() {
-        StatisticDTO durationHoursByCourse = statisticService.getDurationHoursByCourse();
+        StatisticDTO durationHoursByCourse = statisticService.getApplysByCourse();
         return Result.success(durationHoursByCourse);
     }
 
