@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.selection.system.mapper.StudentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.Student">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="school" property="school" />
+        <result column="major" property="major" />
+        <result column="grade" property="grade" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id, school, major, grade
+    </sql>
+
+
+    <!-- 学生信息分页列表 -->
+    <select id="listPagedStudents" resultType="com.lee.selection.system.model.entity.Student">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            student
+        <where>
+            <if test='queryParams.keywords!=null and queryParams.keywords.trim() neq ""'>
+                AND (
+                    name LIKE CONCAT('%',#{queryParams.keywords},'%')
+                )
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+</mapper>

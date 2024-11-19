@@ -5,99 +5,99 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lee.selection.common.util.DateUtils;
-import com.lee.selection.system.model.entity.Notice;
-import com.lee.selection.system.mapper.NoticeMapper;
-import com.lee.selection.system.service.NoticeService;
+import com.lee.selection.system.model.entity.Student;
+import com.lee.selection.system.mapper.StudentMapper;
+import com.lee.selection.system.service.StudentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.lee.selection.system.model.entity.Notice;
+import com.lee.selection.system.model.entity.Student;
 
 import java.util.Arrays;
 import java.util.List;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 /**
- * 公告信息服务实现类
+ * 学生信息服务实现类
  *
  * @author baomidou
- * @since 2024-11-14
+ * @since 2024-11-08
  */
 @Service
 @RequiredArgsConstructor
-public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> implements NoticeService {
+public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements StudentService {
 
 
     /**
-    * 获取公告信息分页列表
+    * 获取学生信息分页列表
     *
     * @param queryParams 查询参数
     * @param pageNum 页号
      * @param pageSize 页大小
      *
-    * @return {@link IPage<Notice>} 公告信息分页列表
+    * @return {@link IPage<Student>} 学生信息分页列表
     */
     @Override
-    public IPage<Notice> listPagedNotices(Notice queryParams, Integer pageNum, Integer pageSize) {
+    public IPage<Student> listPagedStudents(Student queryParams, Integer pageNum, Integer pageSize) {
     
 
-        Page<Notice> page = new Page<>(pageNum, pageSize);
+        Page<Student> page = new Page<>(pageNum, pageSize);
 
         // 格式化为数据库日期格式，避免日期比较使用格式化函数导致索引失效
         //DateUtils.toDatabaseFormat(queryParams, "startTime", "endTime");
     
         // 查询数据
-        Page<Notice> boPage = this.baseMapper.listPagedNotices(page, queryParams);
+        Page<Student> boPage = this.baseMapper.listPagedStudents(page, queryParams);
     
         // 实体转换
         return boPage;
     }
     
     /**
-     * 获取公告信息表单数据
+     * 获取学生信息表单数据
      *
-     * @param id 公告信息ID
+     * @param id 学生信息ID
      * @return
      */
     @Override
-    public Notice getNoticeData(Long id) {
-        Notice entity = this.getById(id);
+    public Student getStudentData(Long id) {
+        Student entity = this.getById(id);
         return entity;
     }
     
     /**
-     * 新增公告信息
+     * 新增学生信息
      *
-     * @param formData 公告信息表单对象
+     * @param formData 学生信息表单对象
      * @return
      */
     @Override
-    public boolean saveNotice(Notice formData) {
+    public boolean saveStudent(Student formData) {
 
         return this.save(formData);
     }
     
     /**
-     * 更新公告信息
+     * 更新学生信息
      *
-     * @param id   公告信息ID
-     * @param formData 公告信息表单对象
+     * @param id   学生信息ID
+     * @param formData 学生信息表单对象
      * @return
      */
     @Override
-    public boolean updateNotice(Long id,Notice formData) {
+    public boolean updateStudent(Long id,Student formData) {
         return this.updateById(formData);
     }
     
     /**
-     * 删除公告信息
+     * 删除学生信息
      *
-     * @param ids 公告信息ID，多个以英文逗号(,)分割
+     * @param ids 学生信息ID，多个以英文逗号(,)分割
      * @return true|false
      */
     @Override
-    public boolean deleteNotices(String ids) {
-        Assert.isTrue(StrUtil.isNotBlank(ids), "删除的公告信息数据为空");
+    public boolean deleteStudents(String ids) {
+        Assert.isTrue(StrUtil.isNotBlank(ids), "删除的学生信息数据为空");
         // 逻辑删除
         List<Long> idList = Arrays.stream(ids.split(","))
                 .map(Long::parseLong)

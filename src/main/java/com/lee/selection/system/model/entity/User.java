@@ -1,62 +1,53 @@
 package com.lee.selection.system.model.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 包含  管理员  教师  学生等实体
+ * 用户基本信息表实体
  *
  * @author baomidou
- * @since 2024-10-24
+ * @since 2024-11-07
  */
 @Getter
 @Setter
+
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 编号
-     */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
-     * 学号/教师编号
+     * 登录名
      */
-    private String code;
+    private String username;
 
     /**
-     * 角色id
+     * 昵称
      */
-    private Integer roleId;
-
-    /**
-     * 姓名
-     */
-    private String name;
+    private String nickname;
 
     /**
      * 密码
      */
+    @JsonIgnore
     private String password;
 
     /**
-     * 邮箱
-     */
-    private String email;
-
-    /**
-     * 手机号
-     */
-    private String phone;
-
-    /**
-     * 头像
+     * 头像url
      */
     private String avatar;
 
@@ -66,34 +57,40 @@ public class User implements Serializable {
     private Integer gender;
 
     /**
-     * 出生年月
+     * 手机号
      */
-    private LocalDate birthday;
+    private String phone;
 
     /**
-     * 入学日期
+     * 邮箱
      */
-    private LocalDate entryDate;
+    private String email;
 
     /**
-     * 身份证号
+     * 创建时间
      */
-    private String idCard;
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDate createTime;
 
     /**
-     * 专业班级id
+     * 更新时间
      */
-    private Integer clazzId;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDate updateTime;
 
     /**
-     * 所在专业id
+     * 角色id
      */
-    private Integer majorId;
+    private Integer roleId;
 
     /**
-     * 备注
+     * 角色名称
      */
-    private String remark;
+    @TableField(exist = false)
+    private String role;
 
+    /**
+     * 状态
+     */
     private Integer status;
 }

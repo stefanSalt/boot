@@ -35,6 +35,19 @@ public class AuthController {
         return Result.success(loginResult);
     }
 
+    //注册
+    @Operation(summary = "注册")
+    @PostMapping("/register")
+    public Result<?> register(
+             @RequestParam(name = "username") String username,
+            @RequestParam(name = "password") String password,
+           @RequestParam(name = "phone")String phone,
+           @RequestParam(name = "roleId") Integer roleId
+    ) {
+        authService.register(username, password,phone,roleId );
+        return Result.success();
+    }
+
     @Operation(summary = "注销")
     @DeleteMapping("/logout")
     public Result<?> logout() {

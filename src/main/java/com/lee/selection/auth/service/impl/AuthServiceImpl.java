@@ -41,7 +41,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public LoginResult login(String username, String password, Integer role) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code",username)
+        queryWrapper.eq("username",username)
                 .eq("status",1);
         User user = userService.getOne(queryWrapper);
         // String passwordMD5 = DigestUtils.md5DigestAsHex((password+username).getBytes());
@@ -61,6 +61,16 @@ public class AuthServiceImpl implements AuthService {
                 // 过期时间
                 .expires(tokenService.getExpireTime())
                 .build();
+    }
+
+    @Override
+    public void register(String username, String password, String phone, Integer roleId) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setPhone(phone);
+        user.setRoleId(roleId);
+        userService.save(user);
     }
 
     /**

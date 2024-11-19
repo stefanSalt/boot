@@ -1,21 +1,20 @@
 package com.lee.selection.system.mapper;
 
-import com.lee.selection.system.model.entity.User;
+import com.lee.selection.system.model.entity.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lee.selection.system.model.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
-
 /**
- * 用户 Mapper 接口
+ * 角色 Mapper 接口
  *
  * @author baomidou
- * @since 2024-10-24
+ * @since 2024-11-07
  */
 
 @Mapper
-public interface UserMapper extends BaseMapper<User> {
+public interface RoleMapper extends BaseMapper<Role> {
 
     /**
      * 获取用户分页列表
@@ -24,7 +23,6 @@ public interface UserMapper extends BaseMapper<User> {
      * @param queryParams 查询参数
      * @return
      */
-    Page<User> listPagedUsers(Page<User> page, User queryParams);
-
+    Page<Role> listPagedRoles(Page<Role> page, Role queryParams);
 
 }

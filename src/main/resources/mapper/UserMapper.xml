@@ -5,48 +5,79 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.User">
         <id column="id" property="id"/>
-        <result column="code" property="code"/>
-        <result column="role_id" property="roleId"/>
-        <result column="name" property="name"/>
+        <result column="username" property="username"/>
+        <result column="nickname" property="nickname"/>
         <result column="password" property="password"/>
-        <result column="email" property="email"/>
-        <result column="phone" property="phone"/>
         <result column="avatar" property="avatar"/>
         <result column="gender" property="gender"/>
-        <result column="birthday" property="birthday"/>
-        <result column="entry_date" property="entryDate"/>
-        <result column="ID_card" property="idCard"/>
-        <result column="clazz_id" property="clazzId"/>
-        <result column="major_id" property="majorId"/>
-        <result column="remark" property="remark"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="role_id" property="roleId"/>
         <result column="status" property="status"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, role_id, name, password, email, phone, avatar, gender, birthday, entry_date, ID_card, clazz_id, major_id, remark, status
+        id, username, nickname, password, avatar, gender, phone, email, create_time, update_time, role_id,status
     </sql>
+    <resultMap id="UserDTOMap" type="com.lee.selection.system.model.dto.UserDTO">
+
+            <id column="id" property="id"/>
+            <result column="username" property="username"/>
+            <result column="nickname" property="nickname"/>
+            <result column="password" property="password"/>
+            <result column="avatar" property="avatar"/>
+            <result column="gender" property="gender"/>
+            <result column="phone" property="phone"/>
+            <result column="email" property="email"/>
+            <result column="create_time" property="createTime"/>
+            <result column="update_time" property="updateTime"/>
+            <result column="role_id" property="roleId"/>
+            <result column="status" property="status"/>
+
+        <association property="student" javaType="com.lee.selection.system.model.entity.Student">
+            <id column="sid" property="id"/>
+            <result column="id" property="userId"/>
+            <result column="school" property="school"/>
+            <result column="major" property="major"/>
+            <result column="grade" property="grade"/>
+        </association>
+        <association property="recruiter" javaType="com.lee.selection.system.model.entity.Recruiter">
+            <id column="rid" property="id"/>
+            <result column="id" property="userId"/>
+            <result column="company_id" property="companyId"/>
+            <result column="department" property="department"/>
+            <result column="position" property="position"/>
+        </association>
+    </resultMap>
 
 
-    <!-- 包含  管理员  教师  学生等分页列表 -->
-    <select id="listPagedUsers" resultType="com.lee.selection.system.model.entity.User">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM
-        user
+    <!-- 用户分页列表 -->
+    <select id="listPagedUsers" resultMap="UserDTOMap">
+        select
+            u.id, u.username, u.nickname, u.password, u.avatar, u.gender, u.phone, u.email, u.create_time, u.update_time, u.role_id, u.status,
+            s.id sid,  s.school, s.major, s.grade,
+            r.id rid,  r.company_id, r.department, r.position
+        from user u
+        left join student s on u.id = s.user_id
+        left join recruiter r on u.id = r.user_id
         <where>
-
-            <if test='queryParams.keywords!=null and queryParams.keywords.trim() neq ""'>
+            <if test='queryParams.nickname!=null and queryParams.nickname.trim() neq ""'>
                 AND (
-                name LIKE CONCAT('%',#{queryParams.keywords},'%')
+                    u.username LIKE CONCAT('%',#{queryParams.keywords},'%')
+                    OR u.nickname LIKE CONCAT('%',#{queryParams.keywords},'%')
                 )
             </if>
-            <if test='queryParams.roleId!=null'>
-                AND role_id = #{queryParams.roleId}
-            </if>
-
+        <if test='queryParams.roleId!=null'>
+            AND u.role_id = #{queryParams.roleId}
+        </if>
+        <if test='queryParams.status!=null'>
+            AND u.status = #{queryParams.status}
+        </if>
         </where>
-        ORDER BY id DESC
+        order by u.id desc
     </select>
 
 

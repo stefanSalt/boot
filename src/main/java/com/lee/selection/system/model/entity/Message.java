@@ -1,36 +1,45 @@
 package com.lee.selection.system.model.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 公告信息实体
+ * 留言实体
  *
  * @author baomidou
  * @since 2024-11-14
  */
 @Getter
 @Setter
-public class Notice implements Serializable {
+public class Message implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * id
-     */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
-     * 标题
+     * 姓名
      */
-    private String title;
+    private String name;
+
+    /**
+     * 手机号
+     */
+    private String phone;
+
+    /**
+     * 邮箱
+     */
+    private String email;
 
     /**
      * 详情
@@ -38,19 +47,9 @@ public class Notice implements Serializable {
     private String detail;
 
     /**
-     * 发布人
+     * 创建时间
      */
-    private String creator;
-
-    /**
-     * 发布时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate createTime;
-
-    /**
-     * 更新时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate updateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
 }

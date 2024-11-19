@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.selection.system.mapper.JobInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.JobInfo">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="responsibility" property="responsibility" />
+        <result column="requirement" property="requirement" />
+        <result column="work_address" property="workAddress" />
+        <result column="work_time" property="workTime" />
+        <result column="salary" property="salary" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="remark" property="remark" />
+        <result column="type" property="type" />
+        <result column="recruiter_id" property="recruiterId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, responsibility, requirement, work_address, work_time, salary, status, create_time, update_time, remark, type
+    </sql>
+
+
+    <!-- 分页列表 -->
+    <select id="listPagedJobInfos" resultType="com.lee.selection.system.model.entity.JobInfo">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            job_info
+        <where>
+            <if test='queryParams.name!=null and queryParams.name.trim() neq ""'>
+                AND (
+                    name LIKE CONCAT('%',#{queryParams.name},'%')
+                )
+            </if>
+            <if test='queryParams.workAddress!=null and queryParams.workAddress.trim() neq ""'>
+                AND (
+                    work_address LIKE CONCAT('%',#{queryParams.workAddress},'%')
+                )
+            </if>
+                    <if test="queryParams.recruiterId!=null">
+                        AND recruiter_id = #{queryParams.recruiterId}
+                    </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+    <select id="listPagedJobInfosForApply" resultType="com.lee.selection.system.model.entity.JobInfo">
+        SELECT
+        j.id as id, name, responsibility, requirement, work_address, work_time, salary,j.status as status,
+        j.create_time as creati_time,j.update_time as update_time, remark, type
+
+        FROM
+            job_info j
+        left join apply
+        on apply.job_id = j.id
+        <where>
+            <if test='queryParams.name!=null and queryParams.name.trim() neq ""'>
+                AND (
+                    name LIKE CONCAT('%',#{queryParams.name},'%')
+                )
+            </if>
+            <if test='queryParams.workAddress!=null and queryParams.workAddress.trim() neq ""'>
+                AND (
+                    work_address LIKE CONCAT('%',#{queryParams.workAddress},'%')
+                )
+            </if>
+        <if test='userId!=null'>
+            AND apply.stu_id = #{userId}
+        </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+</mapper>

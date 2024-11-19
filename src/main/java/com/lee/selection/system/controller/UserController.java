@@ -4,10 +4,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import com.lee.selection.common.result.Result;
 import com.lee.selection.common.token.service.TokenService;
+import com.lee.selection.system.model.dto.ChangePasswordDTO;
+import com.lee.selection.system.model.dto.UserDTO;
 import com.lee.selection.system.model.entity.User;
 
-import com.lee.selection.system.model.vo.UserProfileVO;
-import com.lee.selection.system.model.vo.UserVO;
+
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,38 +72,47 @@ public class UserController {
         String authorization = request.getHeader("Authorization");
         String token = authorization.replace("Bearer ", "");
         String username = tokenService.getUsernameFromToken(token);
-        User user = userService.getUserByUsername(username);
-
+        UserDTO user = userService.getUserByUsername(username);
         return Result.success(user);
     }
 
     @Operation(summary = "修改个人中心用户信息")
     @PutMapping("/profile")
-    public Result<?> updateUserProfile(@RequestBody User formData) {
+    public Result<?> updateUserProfile(@RequestBody UserDTO formData) {
         boolean result = userService.updateProfile(formData);
+        return Result.judge(result);
+    }
+
+    //修改密码
+    @Operation(summary = "修改密码")
+    @PutMapping("/password")
+    public Result<?> updatePassword(
+            @RequestBody ChangePasswordDTO changePasswordDTO
+            ) {
+        boolean result = userService.updatePassword(changePasswordDTO);
         return Result.judge(result);
     }
 
         @Operation(summary = "新增用户")
         @PostMapping
-        public Result saveUser(@RequestBody @Valid User formData ) {
+        public Result saveUser(@RequestBody @Valid UserDTO formData ) {
             boolean result = userService.saveUser(formData);
             return Result.judge(result);
         }
 
         @Operation(summary = "用户表单数据")
         @GetMapping("/{id}/form")
-        public Result<User> getUserForm(
+        public Result<UserDTO> getUserForm(
             @Parameter(description = "用户ID") @PathVariable Long id
         ) {
-            User formData = userService.getUserData(id);
+            UserDTO formData = userService.getUserData(id);
             return Result.success(formData);
         }
 
         @Operation(summary = "修改用户")
         @PutMapping(value = "/{id}")
         public Result updateUser(@Parameter(description = "用户ID") @PathVariable Long id,
-        @RequestBody @Validated User formData) {
+        @RequestBody @Validated UserDTO formData) {
             boolean result = userService.updateUser(id, formData);
             return Result.judge(result);
         }

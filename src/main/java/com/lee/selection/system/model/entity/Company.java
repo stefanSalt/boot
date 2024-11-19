@@ -10,14 +10,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 公告信息实体
+ * 企业实体
  *
  * @author baomidou
- * @since 2024-11-14
+ * @since 2024-11-12
  */
 @Getter
 @Setter
-public class Notice implements Serializable {
+public class Company implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,29 +28,38 @@ public class Notice implements Serializable {
     private Integer id;
 
     /**
-     * 标题
+     * 名称
      */
-    private String title;
+    private String name;
 
     /**
-     * 详情
+     * 公司介绍
      */
     private String detail;
 
     /**
-     * 发布人
+     * 地址
      */
-    private String creator;
+    private String companyAddress;
 
     /**
-     * 发布时间
+     * 经营范围
      */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate createTime;
+    private String businessScope;
 
     /**
-     * 更新时间
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 联系电话
+     */
+    private String phone;
+
+    /**
+     * 成立日期
      */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate updateTime;
+    private LocalDate establishedDate;
 }

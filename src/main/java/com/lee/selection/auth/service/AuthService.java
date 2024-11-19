@@ -31,4 +31,6 @@ public interface AuthService {
      * @return 登录结果
      */
     LoginResult refreshToken();
+
+    void register(String username, String password, String phone, Integer roleId);
 }

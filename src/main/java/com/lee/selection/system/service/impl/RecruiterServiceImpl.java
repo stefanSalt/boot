@@ -5,99 +5,99 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lee.selection.common.util.DateUtils;
-import com.lee.selection.system.model.entity.Notice;
-import com.lee.selection.system.mapper.NoticeMapper;
-import com.lee.selection.system.service.NoticeService;
+import com.lee.selection.system.model.entity.Recruiter;
+import com.lee.selection.system.mapper.RecruiterMapper;
+import com.lee.selection.system.service.RecruiterService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.lee.selection.system.model.entity.Notice;
+import com.lee.selection.system.model.entity.Recruiter;
 
 import java.util.Arrays;
 import java.util.List;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 /**
- * 公告信息服务实现类
+ * 招聘者服务实现类
  *
  * @author baomidou
- * @since 2024-11-14
+ * @since 2024-11-08
  */
 @Service
 @RequiredArgsConstructor
-public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> implements NoticeService {
+public class RecruiterServiceImpl extends ServiceImpl<RecruiterMapper, Recruiter> implements RecruiterService {
 
 
     /**
-    * 获取公告信息分页列表
+    * 获取招聘者分页列表
     *
     * @param queryParams 查询参数
     * @param pageNum 页号
      * @param pageSize 页大小
      *
-    * @return {@link IPage<Notice>} 公告信息分页列表
+    * @return {@link IPage<Recruiter>} 招聘者分页列表
     */
     @Override
-    public IPage<Notice> listPagedNotices(Notice queryParams, Integer pageNum, Integer pageSize) {
+    public IPage<Recruiter> listPagedRecruiters(Recruiter queryParams, Integer pageNum, Integer pageSize) {
     
 
-        Page<Notice> page = new Page<>(pageNum, pageSize);
+        Page<Recruiter> page = new Page<>(pageNum, pageSize);
 
         // 格式化为数据库日期格式，避免日期比较使用格式化函数导致索引失效
         //DateUtils.toDatabaseFormat(queryParams, "startTime", "endTime");
     
         // 查询数据
-        Page<Notice> boPage = this.baseMapper.listPagedNotices(page, queryParams);
+        Page<Recruiter> boPage = this.baseMapper.listPagedRecruiters(page, queryParams);
     
         // 实体转换
         return boPage;
     }
     
     /**
-     * 获取公告信息表单数据
+     * 获取招聘者表单数据
      *
-     * @param id 公告信息ID
+     * @param id 招聘者ID
      * @return
      */
     @Override
-    public Notice getNoticeData(Long id) {
-        Notice entity = this.getById(id);
+    public Recruiter getRecruiterData(Long id) {
+        Recruiter entity = this.getById(id);
         return entity;
     }
     
     /**
-     * 新增公告信息
+     * 新增招聘者
      *
-     * @param formData 公告信息表单对象
+     * @param formData 招聘者表单对象
      * @return
      */
     @Override
-    public boolean saveNotice(Notice formData) {
+    public boolean saveRecruiter(Recruiter formData) {
 
         return this.save(formData);
     }
     
     /**
-     * 更新公告信息
+     * 更新招聘者
      *
-     * @param id   公告信息ID
-     * @param formData 公告信息表单对象
+     * @param id   招聘者ID
+     * @param formData 招聘者表单对象
      * @return
      */
     @Override
-    public boolean updateNotice(Long id,Notice formData) {
+    public boolean updateRecruiter(Long id,Recruiter formData) {
         return this.updateById(formData);
     }
     
     /**
-     * 删除公告信息
+     * 删除招聘者
      *
-     * @param ids 公告信息ID，多个以英文逗号(,)分割
+     * @param ids 招聘者ID，多个以英文逗号(,)分割
      * @return true|false
      */
     @Override
-    public boolean deleteNotices(String ids) {
-        Assert.isTrue(StrUtil.isNotBlank(ids), "删除的公告信息数据为空");
+    public boolean deleteRecruiters(String ids) {
+        Assert.isTrue(StrUtil.isNotBlank(ids), "删除的招聘者数据为空");
         // 逻辑删除
         List<Long> idList = Arrays.stream(ids.split(","))
                 .map(Long::parseLong)

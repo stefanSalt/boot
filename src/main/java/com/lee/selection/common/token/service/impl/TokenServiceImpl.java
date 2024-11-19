@@ -45,7 +45,7 @@ public class TokenServiceImpl extends ServiceImpl<TokenMapper, Token> implements
                 .withNotBefore(new Date(System.currentTimeMillis()))
                 .withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(SECRET_KEY_ACCESS));
-      saveAccessToken(token);
+      //saveAccessToken(token);
         return token;
     }
 
@@ -54,14 +54,14 @@ public class TokenServiceImpl extends ServiceImpl<TokenMapper, Token> implements
         tokenEntity.setToken(token);
         tokenEntity.setTokenType(0);
         tokenEntity.setExpireTime(LocalDateTime.now().plusSeconds(ACCESS_TOKEN_EXPIRATION_TIME));
-        save(tokenEntity);
+        //save(tokenEntity);
     }
     public void saveRefreshToken(String token){
         Token tokenEntity = new Token();
         tokenEntity.setToken(token);
         tokenEntity.setTokenType(1);
         tokenEntity.setExpireTime(LocalDateTime.now().plusSeconds(REFRESH_TOKEN_EXPIRATION_TIME));
-        save(tokenEntity);
+        //save(tokenEntity);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class TokenServiceImpl extends ServiceImpl<TokenMapper, Token> implements
                 .withNotBefore(new Date(System.currentTimeMillis()))
                 .withExpiresAt(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(SECRET_KEY_REFRESH));
-        saveRefreshToken(token);
+       // saveRefreshToken(token);
         return token;
     }
 
@@ -117,7 +117,7 @@ public class TokenServiceImpl extends ServiceImpl<TokenMapper, Token> implements
 
     @Override
     public boolean removeToken(String token){
-        return remove(new QueryWrapper<Token>().eq("token",token));
+        return true;
     }
     
 

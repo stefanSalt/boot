@@ -5,99 +5,99 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lee.selection.common.util.DateUtils;
-import com.lee.selection.system.model.entity.Notice;
-import com.lee.selection.system.mapper.NoticeMapper;
-import com.lee.selection.system.service.NoticeService;
+import com.lee.selection.system.model.entity.Role;
+import com.lee.selection.system.mapper.RoleMapper;
+import com.lee.selection.system.service.RoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.lee.selection.system.model.entity.Notice;
+import com.lee.selection.system.model.entity.Role;
 
 import java.util.Arrays;
 import java.util.List;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 /**
- * 公告信息服务实现类
+ * 角色服务实现类
  *
  * @author baomidou
- * @since 2024-11-14
+ * @since 2024-11-07
  */
 @Service
 @RequiredArgsConstructor
-public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> implements NoticeService {
+public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
 
 
     /**
-    * 获取公告信息分页列表
+    * 获取角色分页列表
     *
     * @param queryParams 查询参数
     * @param pageNum 页号
      * @param pageSize 页大小
      *
-    * @return {@link IPage<Notice>} 公告信息分页列表
+    * @return {@link IPage<Role>} 角色分页列表
     */
     @Override
-    public IPage<Notice> listPagedNotices(Notice queryParams, Integer pageNum, Integer pageSize) {
+    public IPage<Role> listPagedRoles(Role queryParams, Integer pageNum, Integer pageSize) {
     
 
-        Page<Notice> page = new Page<>(pageNum, pageSize);
+        Page<Role> page = new Page<>(pageNum, pageSize);
 
         // 格式化为数据库日期格式，避免日期比较使用格式化函数导致索引失效
         //DateUtils.toDatabaseFormat(queryParams, "startTime", "endTime");
     
         // 查询数据
-        Page<Notice> boPage = this.baseMapper.listPagedNotices(page, queryParams);
+        Page<Role> boPage = this.baseMapper.listPagedRoles(page, queryParams);
     
         // 实体转换
         return boPage;
     }
     
     /**
-     * 获取公告信息表单数据
+     * 获取角色表单数据
      *
-     * @param id 公告信息ID
+     * @param id 角色ID
      * @return
      */
     @Override
-    public Notice getNoticeData(Long id) {
-        Notice entity = this.getById(id);
+    public Role getRoleData(Long id) {
+        Role entity = this.getById(id);
         return entity;
     }
     
     /**
-     * 新增公告信息
+     * 新增角色
      *
-     * @param formData 公告信息表单对象
+     * @param formData 角色表单对象
      * @return
      */
     @Override
-    public boolean saveNotice(Notice formData) {
+    public boolean saveRole(Role formData) {
 
         return this.save(formData);
     }
     
     /**
-     * 更新公告信息
+     * 更新角色
      *
-     * @param id   公告信息ID
-     * @param formData 公告信息表单对象
+     * @param id   角色ID
+     * @param formData 角色表单对象
      * @return
      */
     @Override
-    public boolean updateNotice(Long id,Notice formData) {
+    public boolean updateRole(Long id,Role formData) {
         return this.updateById(formData);
     }
     
     /**
-     * 删除公告信息
+     * 删除角色
      *
-     * @param ids 公告信息ID，多个以英文逗号(,)分割
+     * @param ids 角色ID，多个以英文逗号(,)分割
      * @return true|false
      */
     @Override
-    public boolean deleteNotices(String ids) {
-        Assert.isTrue(StrUtil.isNotBlank(ids), "删除的公告信息数据为空");
+    public boolean deleteRoles(String ids) {
+        Assert.isTrue(StrUtil.isNotBlank(ids), "删除的角色数据为空");
         // 逻辑删除
         List<Long> idList = Arrays.stream(ids.split(","))
                 .map(Long::parseLong)

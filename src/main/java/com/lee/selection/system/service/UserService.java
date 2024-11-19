@@ -1,12 +1,10 @@
 package com.lee.selection.system.service;
 
+import com.lee.selection.system.model.dto.ChangePasswordDTO;
+import com.lee.selection.system.model.dto.UserDTO;
 import com.lee.selection.system.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.lee.selection.system.model.vo.UserProfileVO;
-import com.lee.selection.system.model.vo.UserVO;
-
-import java.util.List;
 
 /**
  * 用户 服务类
@@ -31,7 +29,7 @@ public interface UserService extends IService<User> {
      * @param id 用户ID
      * @return
      */
-     User getUserData(Long id);
+     UserDTO getUserData(Long id);
 
 
     /**
@@ -40,7 +38,7 @@ public interface UserService extends IService<User> {
      * @param formData 用户表单对象
      * @return
      */
-    boolean saveUser(User formData);
+    boolean saveUser(UserDTO formData);
 
     /**
      * 修改用户
@@ -49,7 +47,7 @@ public interface UserService extends IService<User> {
      * @param formData 用户表单对象
      * @return
      */
-    boolean updateUser(Long id, User formData);
+    boolean updateUser(Long id, UserDTO formData);
 
 
     /**
@@ -65,10 +63,12 @@ public interface UserService extends IService<User> {
     String getUserName(Integer id);
 
 
-    boolean updateProfile(User formData);
+    boolean updateProfile(UserDTO formData);
     
 
     boolean resetPassword(Integer userId, String password);
 
-    User getUserByUsername(String username);
+    UserDTO getUserByUsername(String username);
+
+    boolean updatePassword(ChangePasswordDTO changePasswordDTO);
 }
