@@ -4,6 +4,7 @@ import com.lee.selection.system.model.entity.JobInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lee.selection.system.model.entity.JobInfo;
+import com.lee.selection.system.model.vo.JobInfoVO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -23,7 +24,7 @@ public interface JobInfoMapper extends BaseMapper<JobInfo> {
      * @param queryParams 查询参数
      * @return
      */
-    Page<JobInfo> listPagedJobInfos(Page<JobInfo> page, JobInfo queryParams);
+    Page<JobInfoVO> listPagedJobInfos(Page<JobInfo> page, JobInfo queryParams);
 
     Page<JobInfo> listPagedJobInfosForApply(Page<JobInfo> page, JobInfo queryParams, Integer userId);
 }

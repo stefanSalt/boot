@@ -2,6 +2,7 @@ package com.lee.selection.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.lee.selection.common.result.Result;
+import com.lee.selection.system.model.vo.JobInfoVO;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +36,7 @@ public class JobInfoController {
         public Result listPagedJobInfos(@RequestParam(defaultValue = "1") Integer pageNum,
                                         @RequestParam(defaultValue = "10")Integer pageSize,
         JobInfo queryParams ) {
-            IPage<JobInfo> result = jobInfoService.listPagedJobInfos(queryParams,pageNum,pageSize);
+            IPage<JobInfoVO> result = jobInfoService.listPagedJobInfos(queryParams,pageNum,pageSize);
             return Result.success(result);
         }
 

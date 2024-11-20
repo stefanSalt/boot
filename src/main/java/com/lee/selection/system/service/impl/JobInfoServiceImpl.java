@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lee.selection.system.model.entity.JobInfo;
 import com.lee.selection.system.mapper.JobInfoMapper;
+import com.lee.selection.system.model.vo.JobInfoVO;
 import com.lee.selection.system.service.JobInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -26,21 +27,20 @@ public class JobInfoServiceImpl extends ServiceImpl<JobInfoMapper, JobInfo> impl
 
 
     /**
-    * 获取分页列表
-    *
-    * @param queryParams 查询参数
-    * @param pageNum 页号
-     * @param pageSize 页大小
+     * 获取分页列表
      *
-    * @return {@link IPage<JobInfo>} 分页列表
-    */
+     * @param queryParams 查询参数
+     * @param pageNum     页号
+     * @param pageSize    页大小
+     * @return {@link IPage<JobInfo>} 分页列表
+     */
     @Override
-    public IPage<JobInfo> listPagedJobInfos(JobInfo queryParams, Integer pageNum, Integer pageSize) {
+    public Page<JobInfoVO> listPagedJobInfos(JobInfo queryParams, Integer pageNum, Integer pageSize) {
 
         Page<JobInfo> page = new Page<>(pageNum, pageSize);
     
         // 查询数据
-        Page<JobInfo> boPage = this.baseMapper.listPagedJobInfos(page, queryParams);
+        Page<JobInfoVO> boPage = this.baseMapper.listPagedJobInfos(page, queryParams);
 
         return boPage;
     }

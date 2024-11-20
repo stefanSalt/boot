@@ -1,8 +1,11 @@
 package com.lee.selection.system.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lee.selection.system.model.entity.JobInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.lee.selection.system.model.vo.JobInfoVO;
+
 /**
  *  服务类
  *
@@ -13,11 +16,11 @@ public interface JobInfoService extends IService<JobInfo> {
 
 
     /**
-     *分页列表
+     * 分页列表
      *
      * @return
      */
-    IPage<JobInfo> listPagedJobInfos(JobInfo queryParams, Integer pageNum, Integer pageSize);
+    Page<JobInfoVO> listPagedJobInfos(JobInfo queryParams, Integer pageNum, Integer pageSize);
 
 
     /**
