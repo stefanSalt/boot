@@ -3,7 +3,7 @@
 <mapper namespace="com.lee.selection.system.mapper.CompanyMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.Company">
+    <resultMap id="BaseResultMap" type="com.lee.online_store.system.model.entity.Company">
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="detail" property="detail" />
@@ -21,7 +21,7 @@
 
 
     <!-- 企业分页列表 -->
-    <select id="listPagedCompanys" resultType="com.lee.selection.system.model.entity.Company">
+    <select id="listPagedCompanys" resultType="com.lee.online_store.system.model.entity.Company">
         SELECT
             <include refid="Base_Column_List"/>
         FROM

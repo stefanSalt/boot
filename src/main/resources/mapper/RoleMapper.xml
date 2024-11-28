@@ -3,7 +3,7 @@
 <mapper namespace="com.lee.selection.system.mapper.RoleMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.Role">
+    <resultMap id="BaseResultMap" type="com.lee.online_store.system.model.entity.Role">
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="description" property="description" />
@@ -16,7 +16,7 @@
 
 
     <!-- 角色分页列表 -->
-    <select id="listPagedRoles" resultType="com.lee.selection.system.model.entity.Role">
+    <select id="listPagedRoles" resultType="com.lee.online_store.system.model.entity.Role">
         SELECT
             <include refid="Base_Column_List"/>
         FROM

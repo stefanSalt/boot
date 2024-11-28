@@ -3,7 +3,7 @@
 <mapper namespace="com.lee.selection.system.mapper.JobInfoMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.JobInfo">
+    <resultMap id="BaseResultMap" type="com.lee.online_store.system.model.entity.JobInfo">
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="responsibility" property="responsibility" />
@@ -18,7 +18,7 @@
         <result column="type" property="type" />
         <result column="recruiter_id" property="recruiterId" />
     </resultMap>
-    <resultMap id="JobInfoVO" type="com.lee.selection.system.model.vo.JobInfoVO">
+    <resultMap id="JobInfoVO" type="com.lee.online_store.system.model.vo.JobInfoVO">
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="responsibility" property="responsibility" />
@@ -76,7 +76,7 @@
         </where>
         ORDER BY id DESC
     </select>
-    <select id="listPagedJobInfosForApply" resultType="com.lee.selection.system.model.entity.JobInfo">
+    <select id="listPagedJobInfosForApply" resultType="com.lee.online_store.system.model.entity.JobInfo">
         SELECT
         j.id as id, name, responsibility, requirement, work_address, work_time, salary,j.status as status,
         j.create_time as creati_time,j.update_time as update_time, remark, type

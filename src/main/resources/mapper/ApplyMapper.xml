@@ -3,7 +3,7 @@
 <mapper namespace="com.lee.selection.system.mapper.ApplyMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.Apply">
+    <resultMap id="BaseResultMap" type="com.lee.online_store.system.model.entity.Apply">
         <id column="id" property="id" />
         <result column="stu_id" property="stuId" />
         <result column="job_id" property="jobId" />
@@ -14,7 +14,7 @@
         <result column="recruiter_id" property="recruiterId" />
     </resultMap>
 
-    <resultMap id="ApplyVO" type="com.lee.selection.system.model.vo.ApplyVO">
+    <resultMap id="ApplyVO" type="com.lee.online_store.system.model.vo.ApplyVO">
         <id column="id" property="id" />
         <result column="job_name" property="jobName" />
         <result column="student_name" property="studentName" />

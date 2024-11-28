@@ -3,7 +3,7 @@
 <mapper namespace="com.lee.selection.system.mapper.RecruiterMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.Recruiter">
+    <resultMap id="BaseResultMap" type="com.lee.online_store.system.model.entity.Recruiter">
         <id column="id" property="id" />
         <result column="user_id" property="userId" />
         <result column="company_id" property="companyId" />
@@ -18,7 +18,7 @@
 
 
     <!-- 招聘者分页列表 -->
-    <select id="listPagedRecruiters" resultType="com.lee.selection.system.model.entity.Recruiter">
+    <select id="listPagedRecruiters" resultType="com.lee.online_store.system.model.entity.Recruiter">
         SELECT
             <include refid="Base_Column_List"/>
         FROM

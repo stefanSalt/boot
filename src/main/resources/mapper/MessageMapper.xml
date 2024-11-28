@@ -3,7 +3,7 @@
 <mapper namespace="com.lee.selection.system.mapper.MessageMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.Message">
+    <resultMap id="BaseResultMap" type="com.lee.online_store.system.model.entity.Message">
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="phone" property="phone" />
@@ -19,7 +19,7 @@
 
 
     <!-- 留言分页列表 -->
-    <select id="listPagedMessages" resultType="com.lee.selection.system.model.entity.Message">
+    <select id="listPagedMessages" resultType="com.lee.online_store.system.model.entity.Message">
         SELECT
             <include refid="Base_Column_List"/>
         FROM

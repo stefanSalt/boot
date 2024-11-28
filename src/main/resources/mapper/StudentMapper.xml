@@ -3,7 +3,7 @@
 <mapper namespace="com.lee.selection.system.mapper.StudentMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.Student">
+    <resultMap id="BaseResultMap" type="com.lee.online_store.system.model.entity.Student">
         <id column="id" property="id" />
         <result column="user_id" property="userId" />
         <result column="school" property="school" />
@@ -18,7 +18,7 @@
 
 
     <!-- 学生信息分页列表 -->
-    <select id="listPagedStudents" resultType="com.lee.selection.system.model.entity.Student">
+    <select id="listPagedStudents" resultType="com.lee.online_store.system.model.entity.Student">
         SELECT
             <include refid="Base_Column_List"/>
         FROM

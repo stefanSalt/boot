@@ -1,84 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lee.selection.system.mapper.UserMapper">
+<mapper namespace="com.lee.online_store.system.mapper.UserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.selection.system.model.entity.User">
+    <resultMap id="BaseResultMap" type="com.lee.online_store.system.model.entity.User">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="nickname" property="nickname"/>
-        <result column="password" property="password"/>
-        <result column="avatar" property="avatar"/>
-        <result column="gender" property="gender"/>
         <result column="phone" property="phone"/>
         <result column="email" property="email"/>
+        <result column="password" property="password"/>
+        <result column="role" property="role"/>
+        <result column="avatar" property="avatar"/>
+        <result column="status" property="status"/>
+        <result column="gender" property="gender"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
-        <result column="role_id" property="roleId"/>
-        <result column="status" property="status"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, username, nickname, password, avatar, gender, phone, email, create_time, update_time, role_id,status
+        id, username, nickname, phone, email, password, role, create_time, update_time,avatar,status,gender
     </sql>
-    <resultMap id="UserDTOMap" type="com.lee.selection.system.model.dto.UserDTO">
-
-            <id column="id" property="id"/>
-            <result column="username" property="username"/>
-            <result column="nickname" property="nickname"/>
-            <result column="password" property="password"/>
-            <result column="avatar" property="avatar"/>
-            <result column="gender" property="gender"/>
-            <result column="phone" property="phone"/>
-            <result column="email" property="email"/>
-            <result column="create_time" property="createTime"/>
-            <result column="update_time" property="updateTime"/>
-            <result column="role_id" property="roleId"/>
-            <result column="status" property="status"/>
-
-        <association property="student" javaType="com.lee.selection.system.model.entity.Student">
-            <id column="sid" property="id"/>
-            <result column="id" property="userId"/>
-            <result column="school" property="school"/>
-            <result column="major" property="major"/>
-            <result column="grade" property="grade"/>
-        </association>
-        <association property="recruiter" javaType="com.lee.selection.system.model.entity.Recruiter">
-            <id column="rid" property="id"/>
-            <result column="id" property="userId"/>
-            <result column="company_id" property="companyId"/>
-            <result column="department" property="department"/>
-            <result column="position" property="position"/>
-        </association>
-    </resultMap>
 
 
-    <!-- 用户分页列表 -->
-    <select id="listPagedUsers" resultMap="UserDTOMap">
-        select
-            u.id, u.username, u.nickname, u.password, u.avatar, u.gender, u.phone, u.email, u.create_time, u.update_time, u.role_id, u.status,
-            s.id sid,  s.school, s.major, s.grade,
-            r.id rid,  r.company_id, r.department, r.position
-        from user u
-        left join student s on u.id = s.user_id
-        left join recruiter r on u.id = r.user_id
+    <!-- 用户信息分页列表 -->
+    <select id="listPagedUsers" resultType="com.lee.online_store.system.model.entity.User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        t_user
         <where>
-            <if test='queryParams.nickname!=null and queryParams.nickname.trim() neq ""'>
+            <if test='queryParams.username!=null and queryParams.username.trim() neq ""'>
                 AND (
-                    u.username LIKE CONCAT('%',#{queryParams.keywords},'%')
-                    OR u.nickname LIKE CONCAT('%',#{queryParams.keywords},'%')
+                username LIKE CONCAT('%',#{queryParams.username},'%')
                 )
             </if>
-        <if test='queryParams.roleId!=null'>
-            AND u.role_id = #{queryParams.roleId}
-        </if>
-        <if test='queryParams.status!=null'>
-            AND u.status = #{queryParams.status}
-        </if>
-        </where>
-        order by u.id desc
-    </select>
+            <if test='queryParams.nickname!=null and queryParams.nickname.trim() neq ""'>
+                AND (
+                nickname LIKE CONCAT('%',#{queryParams.nickname},'%')
+                )
+            </if>
+            <if test='queryParams.phone!=null and queryParams.phone.trim() neq ""'>
+            AND (
+            phone LIKE CONCAT('%',#{queryParams.phone},'%')
+            )
+            </if>
 
+            <if test='queryParams.role!=null and queryParams.role.trim() neq ""'>
+                AND (
+                role = #{queryParams.role}
+                )
+            </if>
+            <if test='queryParams.status!=null'>
+                AND (
+                status = #{queryParams.status}
+                )
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
 
 </mapper>

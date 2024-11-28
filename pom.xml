@@ -7,13 +7,13 @@
     <!-- 定义 groupId，用于唯一标识包的命名空间 -->
     <groupId>com.lee</groupId>
 
-    <artifactId>recruit</artifactId>
+    <artifactId>online_store</artifactId>
 
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>recruit</name>
+    <name>online_store</name>
 
-    <description>学生兼职招聘系统</description>
+    <description>在线销售平台</description>
 
     <properties>
         <java.version>17</java.version>
@@ -180,7 +180,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.lee.selection.RecruitApplication</mainClass>
+                    <mainClass>com.lee.online_store.OnlineStoreApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>

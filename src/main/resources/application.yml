@@ -1,5 +1,5 @@
 spring:
   application:
-    name: course_selection
+    name: online_store
   profiles:
     active: dev
