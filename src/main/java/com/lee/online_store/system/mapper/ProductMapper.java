@@ -5,6 +5,10 @@ import com.lee.online_store.system.model.entity.Product;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 商品信息 Mapper 接口
@@ -25,4 +29,7 @@ public interface ProductMapper extends BaseMapper<Product> {
      */
     Page<Product> listPagedProducts(Page<Product> page, ProductQuery queryParams);
 
+    List<Product> listProducts(@Param("queryParams") ProductQuery queryParams);
+
+    List<Product> listDiscountByIds(List<Long> idList);
 }

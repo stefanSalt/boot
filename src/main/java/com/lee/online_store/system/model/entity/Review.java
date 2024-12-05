@@ -1,24 +1,26 @@
 package com.lee.online_store.system.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 订单商品关联实体
+ * 评论实体
  *
  * @author baomidou
- * @since 2024-11-28
+ * @since 2024-12-05
  */
 @Getter
 @Setter
-@TableName("t_order_product")
-public class OrderProduct implements Serializable {
+@TableName("t_review")
+public class Review implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,32 +31,35 @@ public class OrderProduct implements Serializable {
     private Integer id;
 
     /**
-     * 订单id
+     * 用户id
      */
-    private Integer orderId;
+    private Integer userId;
 
     /**
      * 商品id
      */
     private Integer productId;
 
-    /**
-     * 数量
-     */
-    private Integer quantity;
 
     /**
-     * 单价
+     * 父级id
      */
-    private BigDecimal price;
+    private Integer parentId;
 
     /**
-     * 折扣
+     * 评论内容
      */
-    private BigDecimal discountValue;
+    private String content;
 
     /**
-     * 折扣后金额
+     * 创建时间
      */
-    private BigDecimal discountAmount;
+    private LocalDateTime createTime;
+
+    private String authorName;
+
+    private String authorAvatar;
+
+    @TableField(exist = false)
+    private List<Review> children;
 }

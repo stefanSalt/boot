@@ -3,6 +3,7 @@ package com.lee.online_store.system.model.entity;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -68,25 +69,33 @@ public class Product implements Serializable {
     /**
      * 图像1url
      */
+    @TableField(updateStrategy = FieldStrategy.ALWAYS)
     private String img1;
 
     /**
      * 图像2url
      */
+    @TableField(updateStrategy = FieldStrategy.ALWAYS)
     private String img2;
 
     /**
      * 图像3url
      */
+    @TableField(updateStrategy = FieldStrategy.ALWAYS)
     private String img3;
 
     /**
      * 图像4url
      */
+    @TableField(updateStrategy = FieldStrategy.ALWAYS)
     private String img4;
 
     private Integer status;
 
     @TableField(exist = false)
     private List<String> imgs;
+
+    @TableField(exist = false)
+    private BigDecimal discount;
+
 }

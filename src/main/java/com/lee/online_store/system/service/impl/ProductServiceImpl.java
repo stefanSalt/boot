@@ -2,7 +2,6 @@ package com.lee.online_store.system.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lee.online_store.system.model.dto.ProductQuery;
@@ -53,9 +52,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
     @Override
     public List<Product> listProducts(ProductQuery queryParams) {
-        QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("id","product_name");
-        return this.baseMapper.selectList(queryWrapper);
+
+        return this.baseMapper.listProducts(queryParams);
     }
 
     /**
@@ -72,7 +70,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         imgs.add(entity.getImg2());
         imgs.add(entity.getImg3());
         imgs.add(entity.getImg4());
-        imgs.removeIf(StrUtil::isBlank);
         entity.setImgs(imgs);
         return entity;
     }
@@ -159,5 +156,22 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         return this.removeByIds(idList);
     }
 
+    @Override
+    public List<Product> listProductsByIds(String ids) {
+        Assert.isTrue(StrUtil.isNotBlank(ids), "商品信息ID为空");
+        List<Long> idList = Arrays.stream(ids.split("," ))
+                .map(Long::parseLong)
+                .toList();
 
+        return this.listByIds(idList);
+    }
+
+    @Override
+    public List<Product> listDiscountByIds(String ids) {
+        Assert.isTrue(StrUtil.isNotBlank(ids), "商品信息ID为空");
+        List<Long> idList = Arrays.stream(ids.split("," ))
+                .map(Long::parseLong)
+                .toList();
+        return this.baseMapper.listDiscountByIds(idList);
+    }
 }

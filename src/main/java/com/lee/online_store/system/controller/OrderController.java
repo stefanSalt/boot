@@ -15,6 +15,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 
 /**
  * 订单 前端控制器
@@ -36,6 +38,13 @@ public class OrderController {
                                         @RequestParam(defaultValue = "10")Integer pageSize,
         OrderQuery queryParams ) {
             IPage<Order> result = orderService.listPagedOrders(queryParams,pageNum,pageSize);
+            return Result.success(result);
+        }
+
+        @Operation(summary = "订单列表")
+        @GetMapping("/list")
+        public Result listOrders(OrderQuery queryParams ) {
+            List<Order> result = orderService.listOrders(queryParams);
             return Result.success(result);
         }
 

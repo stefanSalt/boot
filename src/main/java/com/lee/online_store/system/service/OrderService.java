@@ -4,6 +4,9 @@ import com.lee.online_store.system.model.dto.OrderQuery;
 import com.lee.online_store.system.model.entity.Order;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+
+import java.util.List;
+
 /**
  * 订单 服务类
  *
@@ -56,4 +59,5 @@ public interface OrderService extends IService<Order> {
      */
     boolean deleteOrders(String ids);
 
+    List<Order> listOrders(OrderQuery queryParams);
 }

@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -41,12 +42,32 @@ public class ProductController {
             return Result.success(result);
         }
 
+
+
         @Operation(summary = "商品信息列表")
         @GetMapping("/list")
         public Result listProducts(ProductQuery queryParams ) {
             List<Product> result = productService.listProducts(queryParams);
             return Result.success(result);
         }
+
+        @Operation(summary = "根据ids获取商品信息列表")
+        @GetMapping("listByIds")
+        public Result listProductsByIds(
+            @Parameter(description = "商品信息ID，多个以英文逗号(,)分割") @RequestParam String ids
+        ) {
+            List<Product> result = productService.listProductsByIds(ids);
+            return Result.success(result);
+        }
+
+    @Operation(summary = "根据ids获取商品当前折扣")
+    @GetMapping("listDiscountByIds")
+    public Result listDiscountByIds(
+            @Parameter(description = "商品信息ID，多个以英文逗号(,)分割") @RequestParam String ids
+    ) {
+        List<Product> result = productService.listDiscountByIds(ids);
+        return Result.success(result);
+    }
 
         @Operation(summary = "新增商品信息")
         @PostMapping

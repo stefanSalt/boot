@@ -27,4 +27,5 @@ public interface OrderProductMapper extends BaseMapper<OrderProduct> {
      */
     List<OrderProductVO> listOrderProductsByOrderId(Integer orderId);
 
+    int saveBatch(List<OrderProductVO> orderProducts);
 }

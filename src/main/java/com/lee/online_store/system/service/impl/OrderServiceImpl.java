@@ -5,14 +5,22 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lee.online_store.system.mapper.OrderProductMapper;
+import com.lee.online_store.system.mapper.PaymentMapper;
+import com.lee.online_store.system.mapper.ProductMapper;
 import com.lee.online_store.system.model.dto.OrderQuery;
 import com.lee.online_store.system.model.entity.Order;
 import com.lee.online_store.system.mapper.OrderMapper;
+import com.lee.online_store.system.model.entity.OrderProduct;
+import com.lee.online_store.system.model.entity.Payment;
+import com.lee.online_store.system.model.entity.Product;
+import com.lee.online_store.system.model.vo.OrderProductVO;
 import com.lee.online_store.system.service.OrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 /**
@@ -26,6 +34,8 @@ import java.util.List;
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {
     private final OrderMapper orderMapper;
     private final OrderProductMapper orderProductMapper;
+    private final ProductMapper productMapper;
+    private final PaymentMapper paymentMapper;
 
 
     /**
@@ -71,9 +81,50 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
      * @return
      */
     @Override
+    @Transactional
     public boolean saveOrder(Order formData) {
 
-        return this.save(formData);
+        // 获取订单商品
+        List<OrderProductVO> orderProducts = formData.getOrderProducts();
+        List<Long> productIds = orderProducts.stream().map(OrderProductVO::getProductId).map(Long::valueOf).toList();
+        //获取商品信息
+        List<Product> products = productMapper.listDiscountByIds(productIds);
+
+        //根据商品信息计算订单商品价格
+        for (OrderProductVO orderProduct : orderProducts) {
+            for (Product product : products) {
+                if (orderProduct.getProductId().equals(product.getId())) {
+                    orderProduct.setPrice(BigDecimal.valueOf(product.getPrice()));
+                    orderProduct.setDiscountValue(product.getDiscount());
+                    orderProduct.setQuantity(orderProduct.getQuantity());
+
+                    orderProduct.setDiscountAmount(product.getDiscount().multiply(new java.math.BigDecimal(orderProduct.getQuantity()))
+                            .multiply(orderProduct.getPrice()));
+                    break;
+                }
+            }
+        }
+        //计算订单总金额 =各个商品的单价*各个商品数量
+        formData.setTotalAmount(orderProducts.stream().map(product->product.getPrice().multiply(new java.math.BigDecimal(product.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add));
+
+
+        //计算订单优惠后金额
+        formData.setDiscountAmount(orderProducts.stream().map(OrderProductVO::getDiscountAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
+        formData.setStatus(1);
+        boolean save = this.save(formData);
+        //订单商品关联订单ID
+        orderProducts.forEach(orderProduct -> orderProduct.setOrderId(formData.getId()));
+        orderProductMapper.saveBatch(orderProducts);
+
+        //生成支付信息
+        Payment payment = new Payment();
+        payment.setOrderId(formData.getId());
+        payment.setAmount(formData.getDiscountAmount());
+        payment.setPaymentMethod(formData.getPaymentMethod());
+        payment.setStatus(1);
+        paymentMapper.insert(payment);
+        return save;
     }
     
     /**
@@ -103,6 +154,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                 .toList();
         return this.removeByIds(idList);
     }
-    
 
+    @Override
+    public List<Order> listOrders(OrderQuery queryParams) {
+        List<Order> list = orderMapper.listProducts(queryParams);
+        return list;
+    }
 }

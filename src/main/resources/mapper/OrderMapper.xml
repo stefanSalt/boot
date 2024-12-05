@@ -38,5 +38,23 @@
         </where>
         ORDER BY id DESC
     </select>
+    <select id="listProducts" resultType="com.lee.online_store.system.model.entity.Order">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            t_order
+        <where>
+            <if test="queryParams.userId != null">
+                AND user_id = #{queryParams.userId}
+            </if>
+            <if test="queryParams.timeRange != null">
+                AND create_time BETWEEN #{queryParams.timeRange[0]} AND #{queryParams.timeRange[1]}
+            </if>
+            <if test="queryParams.status != null">
+               AND status = #{queryParams.status}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
 
 </mapper>

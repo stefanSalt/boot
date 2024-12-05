@@ -64,7 +64,7 @@
             #{queryParams.orderBy}
 
         <choose>
-            <when test='queryParams.sort==0'>
+            <when test='queryParams.sort.equals("asc")'>
                 ASC
             </when>
             <otherwise>
@@ -74,6 +74,69 @@
 
         </if>
 
+    </select>
+    <select id="listProducts" resultType="com.lee.online_store.system.model.entity.Product">
+        SELECT
+        p.id as id, product_name, category_id, price, description, stock_quantity, create_time, img1, img2, img3, img4,
+        t_category.category_name AS category_name, status
+        FROM
+        t_product p left join t_category on p.category_id = t_category.id
+        <where>
+            <if test='queryParams.productName!=null and queryParams.productName.trim() neq ""'>
+                AND
+                product_name LIKE CONCAT('%',#{queryParams.productName},'%')
+
+            </if>
+            <if test='queryParams.categoryId!=null'>
+                AND
+                category_id = #{queryParams.categoryId}
+
+            </if>
+            <if test='queryParams.minPrice!=null'>
+                AND
+                price >= #{queryParams.minPrice}
+
+            </if>
+            <if test='queryParams.maxPrice!=null'>
+                AND
+                #{queryParams.maxPrice} >= price
+
+            </if>
+            <if test='queryParams.status!=null'>
+                AND
+                status = #{queryParams.status}
+
+            </if>
+        </where>
+        <if test='queryParams.orderBy!=null'>
+            ORDER BY
+            #{queryParams.orderBy}
+
+            <choose>
+                <when test='queryParams.sort.equals("asc")'>
+                    ASC
+                </when>
+                <otherwise>
+                    DESC
+                </otherwise>
+            </choose>
+
+        </if>
+
+    </select>
+    <select id="listDiscountByIds" resultType="com.lee.online_store.system.model.entity.Product">
+        SELECT
+        p.id as id, p.price as price,  discount_value as discount
+        FROM
+        t_product p join t_promotion_product pp on p.id=pp.product_id
+        join t_promotion pr on pp.promotion_id=pr.id
+        WHERE
+        p.id IN
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        and  pr.end_time>now() and now()> pr.start_time
+        group by p.id
     </select>
 
 </mapper>

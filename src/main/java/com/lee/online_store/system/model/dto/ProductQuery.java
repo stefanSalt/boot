@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.apache.poi.hpsf.Decimal;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 /**
  * 商品查询参数
  */
@@ -13,9 +15,9 @@ import org.springframework.stereotype.Service;
 public class ProductQuery {
     private String productName;
     private Integer categoryId;
-    private Decimal minPrice;
-    private Decimal maxPrice;
+    private BigDecimal minPrice;
+    private BigDecimal maxPrice;
     private Integer orderBy;
-    private Integer sort;
+    private String sort;
     private Integer status;
 }

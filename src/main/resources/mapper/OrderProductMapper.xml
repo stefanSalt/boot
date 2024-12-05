@@ -19,6 +19,14 @@
     <sql id="Base_Column_List">
         id, order_id, product_id, quantity, price, discount_value, discount_amount
     </sql>
+    <insert id="saveBatch">
+        insert into t_order_product
+        (order_id, product_id, quantity, price, discount_value, discount_amount)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.orderId},#{item.productId},#{item.quantity},#{item.price},#{item.discountValue},#{item.discountAmount})
+        </foreach>
+    </insert>
 
 
     <!-- 订单商品关联分页列表 -->

@@ -1,23 +1,23 @@
 package com.lee.online_store.system.mapper;
 
-import com.lee.online_store.system.model.dto.OrderQuery;
-import com.lee.online_store.system.model.entity.Order;
+import com.lee.online_store.system.model.entity.Review;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lee.online_store.system.model.entity.Review;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 /**
- * 订单 Mapper 接口
+ * 评论 Mapper 接口
  *
  * @author baomidou
- * @since 2024-11-28
+ * @since 2024-12-05
  */
 
 @Mapper
-public interface OrderMapper extends BaseMapper<Order> {
+public interface ReviewMapper extends BaseMapper<Review> {
 
     /**
      * 获取用户分页列表
@@ -26,7 +26,7 @@ public interface OrderMapper extends BaseMapper<Order> {
      * @param queryParams 查询参数
      * @return
      */
-    Page<Order> listPagedOrders(Page<Order> page, OrderQuery queryParams);
+    Page<Review> listPagedReviews(Page<Review> page, Review queryParams);
 
-    List<Order> listProducts(@Param("queryParams") OrderQuery queryParams);
+    List<Review> listReviews(@Param("queryParams") Review queryParams);
 }

@@ -60,4 +60,8 @@ public interface ProductService extends IService<Product> {
     boolean deleteProducts(String ids);
 
     List<Product> listProducts(ProductQuery queryParams);
+
+    List<Product> listProductsByIds(String ids);
+
+    List<Product> listDiscountByIds(String ids);
 }
