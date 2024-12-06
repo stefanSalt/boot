@@ -28,10 +28,9 @@ public class AuthController {
     @PostMapping("/login")
     public Result<LoginResult> login(
             @Parameter(description = "用户名", example = "admin") @RequestParam(name = "username") String username,
-            @Parameter(description = "密码", example = "123456") @RequestParam(name = "password") String password,
-            @Parameter(description = "角色")@RequestParam(name = "roleId") Integer roleId
+            @Parameter(description = "密码", example = "123456") @RequestParam(name = "password") String password
     ) {
-        LoginResult loginResult = authService.login(username, password,roleId );
+        LoginResult loginResult = authService.login(username, password );
         return Result.success(loginResult);
     }
 
@@ -41,10 +40,9 @@ public class AuthController {
     public Result<?> register(
              @RequestParam(name = "username") String username,
             @RequestParam(name = "password") String password,
-           @RequestParam(name = "phone")String phone,
-           @RequestParam(name = "roleId") Integer roleId
+           @RequestParam(name = "phone")String phone
     ) {
-        authService.register(username, password,phone,roleId );
+        authService.register(username, password,phone);
         return Result.success();
     }
 

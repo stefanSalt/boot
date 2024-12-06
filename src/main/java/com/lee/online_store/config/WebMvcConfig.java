@@ -70,11 +70,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     //拦截器配置
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new TokenInterceptor(tokenService))
-                .addPathPatterns("/api/v1/**")
-                .excludePathPatterns("/api/v1/auth/login", "/api/v1/auth/register","api/v1/auth/logout");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new TokenInterceptor(tokenService))
+//                .addPathPatterns("/api/v1/**")
+//                .excludePathPatterns("/api/v1/auth/login", "/api/v1/auth/register","api/v1/auth/logout")
+//                .excludePathPatterns("/api/v1/goods/*/page",)
+//    }
 
 }

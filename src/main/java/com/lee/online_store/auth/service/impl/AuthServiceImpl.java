@@ -7,7 +7,6 @@ import com.lee.online_store.auth.service.AuthService;
 import com.lee.online_store.common.constant.SystemConstant;
 import com.lee.online_store.common.token.service.TokenService;
 import com.lee.online_store.system.model.dto.LoginResult;
-import com.lee.online_store.system.model.dto.UserDTO;
 import com.lee.online_store.system.model.entity.User;
 import com.lee.online_store.system.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,14 +43,13 @@ public class AuthServiceImpl implements AuthService {
      * @return 登录结果
      */
     @Override
-    public LoginResult login(String username, String password, Integer role) {
+    public LoginResult login(String username, String password) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username",username)
                 .eq("status",1);
         User user = userService.getOne(queryWrapper);
-        // String passwordMD5 = DigestUtils.md5DigestAsHex((password+username).getBytes());
-        String passwordMD5 = SystemConstant.DEFAULT_PASSWORD;
-        if (user == null|| !user.getPassword().equals(passwordMD5)){
+
+        if (user == null|| !user.getPassword().equals(password)){
             throw new RuntimeException("用户名或密码错误");
         }
 
@@ -69,11 +67,14 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void register(String username, String password, String phone, Integer roleId) {
+    public void register(String username, String password, String phone) {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
         user.setPhone(phone);
+        user.setRole("user");
+        user.setAvatar(SystemConstant.DEFAULT_AVATAR);
+        user.setStatus(1);
         userService.save(user);
     }
 

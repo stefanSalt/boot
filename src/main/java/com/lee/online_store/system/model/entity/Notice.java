@@ -1,11 +1,10 @@
 package com.lee.online_store.system.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
@@ -48,6 +47,7 @@ public class Notice implements Serializable {
      * 发布时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDate createTime;
 
 

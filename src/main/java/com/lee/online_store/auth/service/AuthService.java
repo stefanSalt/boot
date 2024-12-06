@@ -18,7 +18,7 @@ public interface AuthService {
      * @param password 密码
      * @return 登录结果
      */
-    LoginResult login(String username, String password, Integer role);
+    LoginResult login(String username, String password);
 
     /**
      * 登出
@@ -32,5 +32,5 @@ public interface AuthService {
      */
     LoginResult refreshToken();
 
-    void register(String username, String password, String phone, Integer roleId);
+    void register(String username, String password, String phone);
 }

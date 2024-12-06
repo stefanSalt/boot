@@ -22,7 +22,7 @@ public class TokenInterceptor implements HandlerInterceptor{
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("Authorization" );
         if (StringUtils.isBlank(token)){
-            return false;
+            throw new BusinessException("token失效");
         }
         token = token.replace("Bearer ", "");
         if (!tokenService.isAccessTokenValid(token)){
