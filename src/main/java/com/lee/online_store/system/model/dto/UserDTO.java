@@ -1,8 +1,7 @@
 package com.lee.online_store.system.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.lee.online_store.system.model.entity.Recruiter;
-import com.lee.online_store.system.model.entity.Student;
+
 import com.lee.online_store.system.model.entity.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

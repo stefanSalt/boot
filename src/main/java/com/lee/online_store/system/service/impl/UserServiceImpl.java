@@ -7,14 +7,10 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lee.online_store.common.constant.SystemConstant;
-import com.lee.online_store.system.mapper.RecruiterMapper;
-import com.lee.online_store.system.mapper.RoleMapper;
-import com.lee.online_store.system.mapper.StudentMapper;
+
 import com.lee.online_store.system.model.dto.ChangePasswordDTO;
 import com.lee.online_store.system.model.dto.UserDTO;
-import com.lee.online_store.system.model.entity.Recruiter;
-import com.lee.online_store.system.model.entity.Role;
-import com.lee.online_store.system.model.entity.Student;
+
 import com.lee.online_store.system.model.entity.User;
 import com.lee.online_store.system.mapper.UserMapper;
 import com.lee.online_store.system.service.UserService;
@@ -37,11 +33,7 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
 
-    private final RoleMapper roleMapper;
 
-    private final StudentMapper studentMapper;
-
-    private final RecruiterMapper recruiterMapper;
 
     /**
     * 获取用户分页列表
