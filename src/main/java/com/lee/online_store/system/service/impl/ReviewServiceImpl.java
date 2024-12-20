@@ -117,7 +117,11 @@ public class ReviewServiceImpl extends ServiceImpl<ReviewMapper, Review> impleme
         List<Review> result = this.baseMapper.listReviews(queryParams);
         List<Review> rootList = result.stream().filter(item -> item.getParentId() == 0).toList();
         rootList.forEach(item -> {
-            item.setChildren(result.stream().filter(child -> child.getParentId() != 0 && child.getParentId().equals(item.getId())).toList());
+            item.setChildren(
+                    result.stream().
+                            filter(child -> child.getParentId() != 0 && child.getParentId().equals(item.getId()))
+                            .sorted((o1, o2)-> o2.getCreateTime().compareTo(o1.getCreateTime()))
+                            .toList());
         });
         return rootList;
     }

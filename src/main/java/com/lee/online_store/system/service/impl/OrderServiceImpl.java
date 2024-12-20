@@ -105,13 +105,19 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             }
         }
         //计算订单总金额 =各个商品的单价*各个商品数量
-        formData.setTotalAmount(orderProducts.stream().map(product->product.getPrice().multiply(new java.math.BigDecimal(product.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add));
+           formData.setTotalAmount(orderProducts.stream()
+       .filter(product -> product.getPrice() != null && product.getQuantity() != null)
+       .map(product -> product.getPrice().multiply(new java.math.BigDecimal(product.getQuantity())))
+       .reduce(BigDecimal.ZERO, BigDecimal::add));
+
 
 
         //计算订单优惠后金额
-        formData.setDiscountAmount(orderProducts.stream().map(OrderProductVO::getDiscountAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
-        formData.setStatus(1);
+   formData.setDiscountAmount(orderProducts.stream()
+       .filter(product -> product.getDiscountAmount() != null)
+       .map(OrderProductVO::getDiscountAmount)
+       .reduce(BigDecimal.ZERO, BigDecimal::add));
+           formData.setStatus(1);
         boolean save = this.save(formData);
         //订单商品关联订单ID
         orderProducts.forEach(orderProduct -> orderProduct.setOrderId(formData.getId()));

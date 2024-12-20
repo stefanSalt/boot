@@ -107,6 +107,14 @@
                 status = #{queryParams.status}
 
             </if>
+        <if test='queryParams.categoryIds!=null and queryParams.categoryIds.trim() neq ""'>
+            AND
+            category_id IN
+            <foreach collection="queryParams.categoryIds.split(',')" item="categoryId" open="(" separator=","
+                     close=")">
+                #{categoryId}
+            </foreach>
+        </if>
         </where>
         <if test='queryParams.orderBy!=null'>
             ORDER BY

@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 public class ProductQuery {
     private String productName;
     private Integer categoryId;
+    private String categoryIds;
     private BigDecimal minPrice;
     private BigDecimal maxPrice;
     private Integer orderBy;

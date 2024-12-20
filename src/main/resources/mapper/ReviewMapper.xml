@@ -50,7 +50,7 @@
                 AND product_id = #{queryParams.productId}
             </if>
         </where>
-        order by id desc
+        order by create_time desc
     </select>
 
 </mapper>
