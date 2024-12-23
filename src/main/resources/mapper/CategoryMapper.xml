@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lee.online_store.system.mapper.CategoryMapper">
+<mapper namespace="com.lee.warehouse.system.mapper.CategoryMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.online_store.system.model.entity.Category">
+    <resultMap id="BaseResultMap" type="com.lee.warehouse.system.model.entity.Category">
         <id column="id" property="id" />
         <result column="category_name" property="categoryName" />
         <result column="parent_id" property="parentId" />
@@ -17,7 +17,7 @@
 
 
     <!-- 商品分类分页列表 -->
-    <select id="listCategorys" resultType="com.lee.online_store.system.model.entity.Category">
+    <select id="listCategorys" resultType="com.lee.warehouse.system.model.entity.Category">
         SELECT
             <include refid="Base_Column_List"/>
         FROM

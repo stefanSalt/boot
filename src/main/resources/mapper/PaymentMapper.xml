@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lee.online_store.system.mapper.PaymentMapper">
+<mapper namespace="com.lee.warehouse.system.mapper.PaymentMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.online_store.system.model.entity.Payment">
+    <resultMap id="BaseResultMap" type="com.lee.warehouse.system.model.entity.Payment">
         <id column="id" property="id" />
         <result column="order_id" property="orderId" />
         <result column="payment_method" property="paymentMethod" />
@@ -20,7 +20,7 @@
 
 
     <!-- 支付信息分页列表 -->
-    <select id="listPagedPayments" resultType="com.lee.online_store.system.model.entity.Payment">
+    <select id="listPagedPayments" resultType="com.lee.warehouse.system.model.entity.Payment">
         SELECT
             <include refid="Base_Column_List"/>
         FROM

@@ -7,13 +7,13 @@
     <!-- 定义 groupId，用于唯一标识包的命名空间 -->
     <groupId>com.lee</groupId>
 
-    <artifactId>online_store</artifactId>
+    <artifactId>warehouse</artifactId>
 
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>online_store</name>
+    <name>warehouse</name>
 
-    <description>在线销售平台</description>
+    <description>仓库管理系统</description>
 
     <properties>
         <java.version>17</java.version>
@@ -180,7 +180,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.lee.online_store.OnlineStoreApplication</mainClass>
+                    <mainClass>com.lee.warehouse.WareHouseApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>

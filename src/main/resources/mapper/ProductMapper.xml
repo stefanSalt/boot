@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lee.online_store.system.mapper.ProductMapper">
+<mapper namespace="com.lee.warehouse.system.mapper.ProductMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.online_store.system.model.entity.Product">
+    <resultMap id="BaseResultMap" type="com.lee.warehouse.system.model.entity.Product">
         <id column="id" property="id"/>
         <result column="product_name" property="productName"/>
         <result column="category_id" property="categoryId"/>
@@ -26,7 +26,7 @@
 
 
     <!-- 商品信息分页列表 -->
-    <select id="listPagedProducts" resultType="com.lee.online_store.system.model.entity.Product">
+    <select id="listPagedProducts" resultType="com.lee.warehouse.system.model.entity.Product">
         SELECT
         p.id as id, product_name, category_id, price, description, stock_quantity, create_time, img1, img2, img3, img4,
             t_category.category_name AS category_name, status
@@ -75,7 +75,7 @@
         </if>
 
     </select>
-    <select id="listProducts" resultType="com.lee.online_store.system.model.entity.Product">
+    <select id="listProducts" resultType="com.lee.warehouse.system.model.entity.Product">
         SELECT
         p.id as id, product_name, category_id, price, description, stock_quantity, create_time, img1, img2, img3, img4,
         t_category.category_name AS category_name, status
@@ -132,7 +132,7 @@
         </if>
 
     </select>
-    <select id="listDiscountByIds" resultType="com.lee.online_store.system.model.entity.Product">
+    <select id="listDiscountByIds" resultType="com.lee.warehouse.system.model.entity.Product">
         SELECT
         p.id as id, p.price as price,  discount_value as discount
         FROM

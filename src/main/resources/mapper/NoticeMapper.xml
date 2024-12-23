@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lee.online_store.system.mapper.NoticeMapper">
+<mapper namespace="com.lee.warehouse.system.mapper.NoticeMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.online_store.system.model.entity.Notice">
+    <resultMap id="BaseResultMap" type="com.lee.warehouse.system.model.entity.Notice">
         <id column="id" property="id" />
         <result column="title" property="title" />
         <result column="content" property="content" />
@@ -19,7 +19,7 @@
 
 
     <!-- 公告信息分页列表 -->
-    <select id="listPagedNotices" resultType="com.lee.online_store.system.model.entity.Notice">
+    <select id="listPagedNotices" resultType="com.lee.warehouse.system.model.entity.Notice">
         SELECT
             <include refid="Base_Column_List"/>
         FROM

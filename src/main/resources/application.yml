@@ -1,5 +1,5 @@
 spring:
   application:
-    name: online_store
+    name: warehouse
   profiles:
     active: dev

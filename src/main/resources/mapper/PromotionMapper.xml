@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lee.online_store.system.mapper.PromotionMapper">
+<mapper namespace="com.lee.warehouse.system.mapper.PromotionMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.online_store.system.model.entity.Promotion">
+    <resultMap id="BaseResultMap" type="com.lee.warehouse.system.model.entity.Promotion">
         <id column="id" property="id"/>
         <result column="promotion_name" property="promotionName"/>
         <result column="description" property="description"/>
@@ -32,7 +32,7 @@
 
 
     <!-- 促销活动分页列表 -->
-    <select id="listPagedPromotions" resultType="com.lee.online_store.system.model.entity.Promotion">
+    <select id="listPagedPromotions" resultType="com.lee.warehouse.system.model.entity.Promotion">
         SELECT
         id, promotion_name, description, start_time, end_time, create_time, discount_type, discount_value, update_time
 
