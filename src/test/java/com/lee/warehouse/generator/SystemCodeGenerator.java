@@ -67,6 +67,8 @@ public class SystemCodeGenerator {
                         String firstCharLowerCaseEntity=lowerCaseEntity.substring(0, 1).toLowerCase() + lowerCaseEntity.substring(1);
                         objectMap.put("firstCharLowerCaseEntity", firstCharLowerCaseEntity);
                         objectMap.put("lowerFirstEntityName", lowerCaseEntity);
+                        String commonPackageName = "com.lee.warehouse";
+                        objectMap.put("commonPackageName", commonPackageName);
 
                     });
 

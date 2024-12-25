@@ -1,7 +1,6 @@
 package com.lee.warehouse.common.token.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.lee.warehouse.common.token.model.entity.Token;
+
 import com.lee.warehouse.system.model.entity.User;
 
 /**
@@ -10,7 +9,7 @@ import com.lee.warehouse.system.model.entity.User;
  * @author baomidou
  * @since 2024-10-15
  */
-public interface TokenService extends IService<Token> {
+public interface TokenService  {
 
 
     Long getExpireTime();

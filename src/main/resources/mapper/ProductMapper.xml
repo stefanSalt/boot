@@ -4,147 +4,40 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.lee.warehouse.system.model.entity.Product">
-        <id column="id" property="id"/>
-        <result column="product_name" property="productName"/>
-        <result column="category_id" property="categoryId"/>
-        <result column="price" property="price"/>
-        <result column="description" property="description"/>
-        <result column="stock_quantity" property="stockQuantity"/>
-        <result column="create_time" property="createTime"/>
-        <result column="img1" property="img1"/>
-        <result column="img2" property="img2"/>
-        <result column="img3" property="img3"/>
-        <result column="img4" property="img4"/>
-        <result column="category_name" property="categoryName"/>
-        <result column="status" property="status"/>
+        <id column="id" property="id" />
+        <result column="supplier_id" property="supplierId" />
+        <result column="name" property="name" />
+        <result column="description" property="description" />
+        <result column="price" property="price" />
+        <result column="product_code" property="productCode" />
+        <result column="category" property="category" />
+        <result column="model" property="model" />
+        <result column="unit" property="unit" />
+        <result column="cost_price" property="costPrice" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, product_name, category_id, price, description, stock_quantity, create_time, img1, img2, img3, img4,status
+        id, supplier_id, name, description, price, product_code, category, model, unit, cost_price, create_time, update_time
     </sql>
 
 
-    <!-- 商品信息分页列表 -->
+    <!-- 产品信息分页列表 -->
     <select id="listPagedProducts" resultType="com.lee.warehouse.system.model.entity.Product">
         SELECT
-        p.id as id, product_name, category_id, price, description, stock_quantity, create_time, img1, img2, img3, img4,
-            t_category.category_name AS category_name, status
+            <include refid="Base_Column_List"/>
         FROM
-        t_product p left join t_category on p.category_id = t_category.id
+            product
         <where>
-            <if test='queryParams.productName!=null and queryParams.productName.trim() neq ""'>
-                AND
-                product_name LIKE CONCAT('%',#{queryParams.productName},'%')
-
-            </if>
-            <if test='queryParams.categoryId!=null'>
-                AND
-                category_id = #{queryParams.categoryId}
-
-            </if>
-            <if test='queryParams.minPrice!=null'>
-                AND
-                price >= #{queryParams.minPrice}
-
-            </if>
-            <if test='queryParams.maxPrice!=null'>
-                AND
-                #{queryParams.maxPrice} >= price
-
-            </if>
-            <if test='queryParams.status!=null'>
-                AND
-                status = #{queryParams.status}
-
+            <if test='queryParams.name!=null and queryParams.name.trim() neq ""'>
+                AND (
+                    name LIKE CONCAT('%',#{queryParams.name},'%')
+                )
             </if>
         </where>
-        <if test='queryParams.orderBy!=null'>
-            ORDER BY
-            #{queryParams.orderBy}
-
-        <choose>
-            <when test='queryParams.sort.equals("asc")'>
-                ASC
-            </when>
-            <otherwise>
-                DESC
-            </otherwise>
-        </choose>
-
-        </if>
-
-    </select>
-    <select id="listProducts" resultType="com.lee.warehouse.system.model.entity.Product">
-        SELECT
-        p.id as id, product_name, category_id, price, description, stock_quantity, create_time, img1, img2, img3, img4,
-        t_category.category_name AS category_name, status
-        FROM
-        t_product p left join t_category on p.category_id = t_category.id
-        <where>
-            <if test='queryParams.productName!=null and queryParams.productName.trim() neq ""'>
-                AND
-                product_name LIKE CONCAT('%',#{queryParams.productName},'%')
-
-            </if>
-            <if test='queryParams.categoryId!=null'>
-                AND
-                category_id = #{queryParams.categoryId}
-
-            </if>
-            <if test='queryParams.minPrice!=null'>
-                AND
-                price >= #{queryParams.minPrice}
-
-            </if>
-            <if test='queryParams.maxPrice!=null'>
-                AND
-                #{queryParams.maxPrice} >= price
-
-            </if>
-            <if test='queryParams.status!=null'>
-                AND
-                status = #{queryParams.status}
-
-            </if>
-        <if test='queryParams.categoryIds!=null and queryParams.categoryIds.trim() neq ""'>
-            AND
-            category_id IN
-            <foreach collection="queryParams.categoryIds.split(',')" item="categoryId" open="(" separator=","
-                     close=")">
-                #{categoryId}
-            </foreach>
-        </if>
-        </where>
-        <if test='queryParams.orderBy!=null'>
-            ORDER BY
-            #{queryParams.orderBy}
-
-            <choose>
-                <when test='queryParams.sort.equals("asc")'>
-                    ASC
-                </when>
-                <otherwise>
-                    DESC
-                </otherwise>
-            </choose>
-
-        </if>
-
-    </select>
-    <select id="listDiscountByIds" resultType="com.lee.warehouse.system.model.entity.Product">
-        SELECT
-        p.id as id, p.price as price,  discount_value as discount
-        FROM
-        t_product p join t_promotion_product pp on p.id=pp.product_id
-        join t_promotion pr on pp.promotion_id=pr.id
-        WHERE
-        p.id IN
-        <foreach collection="idList" item="id" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-        and  pr.end_time>now() and now()> pr.start_time
-        group by p.id
+        ORDER BY id DESC
     </select>
 
 </mapper>

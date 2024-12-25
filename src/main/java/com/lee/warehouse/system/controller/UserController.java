@@ -47,6 +47,12 @@ public class UserController {
             return Result.success(result);
         }
 
+        @Operation(summary = "用户列表option")
+        @GetMapping("/options")
+        public Result listUserOptions() {
+            return Result.success(userService.listUserOptions());
+        }
+
 
     @GetMapping("/me")
     public Result getUserInfo(HttpServletRequest request) {

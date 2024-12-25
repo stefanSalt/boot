@@ -1,7 +1,7 @@
 package com.lee.warehouse.system.model.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
-
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -9,53 +9,55 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 支付信息实体
+ * 仓库信息实体
  *
  * @author baomidou
- * @since 2024-11-28
+ * @since 2024-12-25
  */
 @Getter
 @Setter
-@TableName("t_payment")
-public class Payment implements Serializable {
+public class Warehouse implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * id
+     * 仓库ID
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
-     * 订单id
+     * 管理员id
      */
-    private Integer orderId;
+    private Integer manager;
 
     /**
-     * 支付方式
+     * 仓库名称
      */
-    private String paymentMethod;
+    private String name;
 
     /**
-     * 金额
+     * 仓库位置
      */
-    private BigDecimal amount;
+    private String location;
 
     /**
-     * 支付状态
+     * 面积
      */
-    private Integer status;
+    private BigDecimal area;
 
     /**
-     * 创建时间
+     * 性质
      */
-    @TableField(fill = FieldFill.INSERT)
+    private String type;
+
+    /**
+     * 记录创建时间
+     */
     private LocalDateTime createTime;
 
     /**
-     * 修改时间
+     * 记录更新时间
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 }

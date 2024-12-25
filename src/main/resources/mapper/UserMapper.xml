@@ -60,5 +60,14 @@
         </where>
         ORDER BY id DESC
     </select>
+    <select id="listUserOptions" resultType="com.lee.warehouse.system.model.entity.User">
+        SELECT
+        id, nickname
+        FROM
+        users
+        WHERE
+        status = 1
+        ORDER BY id DESC
+    </select>
 
 </mapper>

@@ -3,73 +3,50 @@ package com.lee.warehouse.system.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 产品信息实体
+ * 供应商信息实体
  *
  * @author baomidou
- * @since 2024-12-25
+ * @since 2024-12-24
  */
 @Getter
 @Setter
-public class Product implements Serializable {
+@TableName("suppliers")
+public class Suppliers implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 产品ID
+     * 供应商ID
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
-     * 供应商ID
-     */
-    private Integer supplierId;
-
-    /**
-     * 产品名称
+     * 供应商名称
      */
     private String name;
 
     /**
-     * 产品描述
+     * 联系信息
      */
-    private String description;
+    private String phone;
 
     /**
-     * 产品价格
+     * 邮箱
      */
-    private BigDecimal price;
+    private String email;
 
     /**
-     * 商品编码
+     * 备注
      */
-    private String productCode;
-
-    /**
-     * 类别
-     */
-    private String category;
-
-    /**
-     * 规格型号
-     */
-    private String model;
-
-    /**
-     * 单位
-     */
-    private String unit;
-
-    /**
-     * 成本价
-     */
-    private BigDecimal costPrice;
+    private String remark;
 
     /**
      * 记录创建时间

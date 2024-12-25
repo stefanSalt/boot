@@ -5,6 +5,8 @@ import com.lee.warehouse.system.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
+import java.util.List;
+
 /**
  * 用户 服务类
  *
@@ -70,4 +72,6 @@ public interface UserService extends IService<User> {
     User getUserByUsername(String username);
 
     boolean updatePassword(ChangePasswordDTO changePasswordDTO);
+
+    List<User> listUserOptions();
 }

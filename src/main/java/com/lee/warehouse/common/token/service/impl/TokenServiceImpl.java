@@ -3,9 +3,6 @@ package com.lee.warehouse.common.token.service.impl;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lee.warehouse.common.token.mapper.TokenMapper;
-import com.lee.warehouse.common.token.model.entity.Token;
 import com.lee.warehouse.common.token.service.TokenService;
 import com.lee.warehouse.system.model.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +20,7 @@ import java.util.Date;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class TokenServiceImpl extends ServiceImpl<TokenMapper, Token> implements TokenService {
+public class TokenServiceImpl  implements TokenService {
 
     private static final String SECRET_KEY_ACCESS = "your-access-token-secret-key";
     private static final String SECRET_KEY_REFRESH = "your-refresh-token-secret-key";
@@ -37,16 +34,7 @@ public class TokenServiceImpl extends ServiceImpl<TokenMapper, Token> implements
         return ACCESS_TOKEN_EXPIRATION_TIME;
     }
 
-//    @Override
-//    public String generateAccessToken(String username) {
-//
-//      String token = JWT.create().withClaim("username", username)
-//                .withNotBefore(new Date(System.currentTimeMillis()))
-//                .withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
-//                .sign(Algorithm.HMAC512(SECRET_KEY_ACCESS));
-//      //saveAccessToken(token);
-//        return token;
-//    }
+
 
     @Override
     public String generateAccessToken(User user) {

@@ -1,19 +1,16 @@
 package com.lee.warehouse.system.mapper;
 
-import com.lee.warehouse.system.model.dto.ProductQuery;
 import com.lee.warehouse.system.model.entity.Product;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lee.warehouse.system.model.entity.Product;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
- * 商品信息 Mapper 接口
+ * 产品信息 Mapper 接口
  *
  * @author baomidou
- * @since 2024-11-27
+ * @since 2024-12-25
  */
 
 @Mapper
@@ -26,9 +23,6 @@ public interface ProductMapper extends BaseMapper<Product> {
      * @param queryParams 查询参数
      * @return
      */
-    Page<Product> listPagedProducts(Page<Product> page, ProductQuery queryParams);
+    Page<Product> listPagedProducts(Page<Product> page, Product queryParams);
 
-    List<Product> listProducts(@Param("queryParams") ProductQuery queryParams);
-
-    List<Product> listDiscountByIds(List<Long> idList);
 }

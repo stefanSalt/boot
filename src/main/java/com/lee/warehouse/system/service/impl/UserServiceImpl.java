@@ -50,10 +50,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 查询数据
         IPage<User> userPage = this.baseMapper.listPagedUsers(page, queryParams);
 
-        // 实体转换
         return userPage;
     }
-    
+
+    /**
+     * 获取用户下拉选项
+     *
+     * @return
+     */
+    @Override
+    public List<User> listUserOptions() {
+        return this.baseMapper.listUserOptions();
+    }
+
     /**
      * 获取用户表单数据
      *

@@ -40,13 +40,10 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
         Page<${entity}> page = new Page<>(pageNum, pageSize);
 
-        // 格式化为数据库日期格式，避免日期比较使用格式化函数导致索引失效
-        //DateUtils.toDatabaseFormat(queryParams, "startTime", "endTime");
-    
+
         // 查询数据
         Page<${entity}> boPage = this.baseMapper.listPaged${entity}s(page, queryParams);
-    
-        // 实体转换
+
         return boPage;
     }
     
