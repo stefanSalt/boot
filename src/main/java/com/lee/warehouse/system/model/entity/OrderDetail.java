@@ -1,8 +1,8 @@
 package com.lee.warehouse.system.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -10,72 +10,48 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 产品信息实体
+ * 订单详情信息实体
  *
  * @author baomidou
  * @since 2024-12-25
  */
 @Getter
 @Setter
-public class Product implements Serializable {
+@TableName("order_detail")
+public class OrderDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 产品ID
+     * 订单详情ID
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
-     * 供应商ID
+     * 订单ID
      */
-    private Integer supplierId;
+    private Integer orderId;
 
     /**
-     * 仓库ID
+     * 产品ID
      */
-    private Integer warehouseId;
+    private Integer productId;
 
     /**
-     * 产品名称
+     * 订单中产品名称
      */
-    private String name;
+    private String productName;
 
     /**
-     * 产品描述
+     * 订单中产品数量
      */
-    private String description;
+    private Integer quantity;
 
     /**
-     * 产品价格
+     * 订单中产品单价
      */
     private BigDecimal price;
-
-    /**
-     * 商品编码
-     */
-    private String productCode;
-
-    /**
-     * 类别
-     */
-    private String category;
-
-    /**
-     * 规格型号
-     */
-    private String model;
-
-    /**
-     * 单位
-     */
-    private String unit;
-
-    /**
-     * 成本价
-     */
-    private BigDecimal costPrice;
 
     /**
      * 记录创建时间
@@ -86,7 +62,4 @@ public class Product implements Serializable {
      * 记录更新时间
      */
     private LocalDateTime updateTime;
-
-    @TableField(exist = false)
-    private Warehouse warehouse;
 }

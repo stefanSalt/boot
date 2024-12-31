@@ -98,6 +98,9 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
                 .toList();
         return this.removeByIds(idList);
     }
-    
 
+    @Override
+    public List<Product> listProductOptions() {
+        return this.baseMapper.listProductOptions();
+    }
 }

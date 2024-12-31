@@ -38,6 +38,14 @@ public class ProductController {
             return Result.success(result);
         }
 
+        //option
+        @Operation(summary = "产品信息 列表option")
+        @GetMapping("/options")
+        public Result listProductOptions() {
+            return Result.success(productService.listProductOptions());
+        }
+
+
         @Operation(summary = "新增产品信息")
         @PostMapping
         public Result saveProduct(@RequestBody @Valid Product formData ) {

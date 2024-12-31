@@ -4,33 +4,33 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 产品信息实体
+ * 库存信息实体
  *
  * @author baomidou
  * @since 2024-12-25
  */
 @Getter
 @Setter
-public class Product implements Serializable {
+public class Inventory implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 产品ID
+     * 库存记录ID
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
-     * 供应商ID
+     * 产品ID
      */
-    private Integer supplierId;
+    private Integer productId;
 
     /**
      * 仓库ID
@@ -38,44 +38,19 @@ public class Product implements Serializable {
     private Integer warehouseId;
 
     /**
-     * 产品名称
+     * 库存数量
      */
-    private String name;
+    private Integer quantity;
 
     /**
-     * 产品描述
+     * 生产日期
      */
-    private String description;
+    private LocalDate productionDate;
 
     /**
-     * 产品价格
+     * 有效期
      */
-    private BigDecimal price;
-
-    /**
-     * 商品编码
-     */
-    private String productCode;
-
-    /**
-     * 类别
-     */
-    private String category;
-
-    /**
-     * 规格型号
-     */
-    private String model;
-
-    /**
-     * 单位
-     */
-    private String unit;
-
-    /**
-     * 成本价
-     */
-    private BigDecimal costPrice;
+    private LocalDate expirationDate;
 
     /**
      * 记录创建时间
@@ -89,4 +64,7 @@ public class Product implements Serializable {
 
     @TableField(exist = false)
     private Warehouse warehouse;
+
+    @TableField(exist = false)
+    private Product product;
 }

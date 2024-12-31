@@ -4,6 +4,9 @@ import com.lee.warehouse.system.model.entity.Product;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lee.warehouse.system.model.entity.Product;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+
+import java.util.List;
+
 /**
  * 产品信息 服务类
  *
@@ -56,4 +59,5 @@ public interface ProductService extends IService<Product> {
      */
     boolean deleteProducts(String ids);
 
+    List<Product> listProductOptions();
 }
