@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.lecture.system.mapper.CheckInMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lee.lecture.system.model.entity.CheckIn">
+        <id column="id" property="id" />
+        <result column="lecture_id" property="lectureId" />
+        <result column="student_id" property="studentId" />
+        <result column="check_in_time" property="checkInTime" />
+        <result column="check_in_type" property="checkInType" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <association property="user" column="student_id" javaType="com.lee.lecture.system.model.entity.User">
+            <id column="id" property="id" />
+            <result column="username" property="username" />
+            <result column="nickname" property="nickname" />
+            <result column="avatar" property="avatar" />
+            <result column="phone" property="phone" />
+        </association>
+        <association property="lecture" column="lecture_id" javaType="com.lee.lecture.system.model.entity.Lecture">
+                <id column="id" property="id" />
+                <result column="title" property="title" />
+        </association>
+
+
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, lecture_id, student_id, check_in_time, check_in_type, location, create_time, update_time
+    </sql>
+
+
+    <!-- 讲座签到表分页列表 -->
+    <select id="listPagedCheckIns" resultMap="BaseResultMap">
+        SELECT
+            c.id as id,
+            c.lecture_id as lecture_id,
+            c.student_id as student_id,
+            c.check_in_time as check_in_time,
+            c.check_in_type as check_in_type,
+            c.create_time as create_time,
+            c.update_time as update_time,
+
+            u.username as username,
+            u.nickname as nickname,
+            u.avatar as avatar,
+            u.phone as phone,
+            l.title as title
+        FROM
+            check_in c
+            LEFT JOIN user u ON c.student_id = u.id
+            LEFT JOIN lecture l ON c.lecture_id = l.id
+        <where>
+            <if test='queryParams.lectureId!=null'>
+                AND c.lecture_id = #{queryParams.lectureId}
+            </if>
+            <if test='queryParams.studentId!=null'>
+                AND c.student_id= #{queryParams.studentId}
+            </if>
+        </where>
+
+
+        ORDER BY create_time DESC
+    </select>
+
+</mapper>

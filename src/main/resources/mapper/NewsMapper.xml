@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.lecture.system.mapper.NewsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lee.lecture.system.model.entity.News">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="content" property="content" />
+        <result column="category_id" property="categoryId" />
+        <result column="cover_url" property="coverUrl" />
+        <result column="author_id" property="authorId" />
+        <result column="status" property="status" />
+        <result column="is_top" property="isTop" />
+        <result column="view_count" property="viewCount" />
+        <result column="publish_time" property="publishTime" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="category_name" property="categoryName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, title, content, category_id, cover_url, author_id, status, is_top, view_count, publish_time, create_time, update_time
+    </sql>
+
+
+    <!-- 资讯信息表分页列表 -->
+    <select id="listPagedNewss" resultType="com.lee.lecture.system.model.entity.News">
+        SELECT
+            n.id as id,
+            n.title as title,
+            n.content as content,
+            n.category_id as categoryId,
+            n.cover_url as coverUrl,
+            n.author_id as authorId,
+            n.status as status,
+            n.is_top as isTop,
+            n.view_count as viewCount,
+            n.publish_time as publishTime,
+            n.create_time as createTime,
+            n.update_time as updateTime,
+            nc.name as categoryName
+        FROM
+            news n
+        left join lecture.news_category nc on n.category_id=nc.id
+        <where>
+            <if test='queryParams.title!=null and queryParams.title.trim() neq ""'>
+                AND (
+                title LIKE CONCAT('%',#{queryParams.title},'%')
+                )
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+</mapper>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lee.warehouse.system.mapper.UserMapper">
+<mapper namespace="com.lee.lecture.system.mapper.UserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.warehouse.system.model.entity.User">
+    <resultMap id="BaseResultMap" type="com.lee.lecture.system.model.entity.User">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="nickname" property="nickname"/>
@@ -25,11 +25,11 @@
 
 
     <!-- 用户信息分页列表 -->
-    <select id="listPagedUsers" resultType="com.lee.warehouse.system.model.entity.User">
+    <select id="listPagedUsers" resultType="com.lee.lecture.system.model.entity.User">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
-        users
+        user
         <where>
             <if test='queryParams.username!=null and queryParams.username.trim() neq ""'>
                 AND (
@@ -60,13 +60,18 @@
         </where>
         ORDER BY id DESC
     </select>
-    <select id="listUserOptions" resultType="com.lee.warehouse.system.model.entity.User">
+    <select id="listUserOptions" resultType="com.lee.lecture.system.model.entity.User">
         SELECT
         id, nickname
         FROM
-        users
+        user
         WHERE
         status = 1
+        <if test='role!=null and role.trim() neq ""'>
+            AND (
+            role = #{role}
+            )
+        </if>
         ORDER BY id DESC
     </select>
 

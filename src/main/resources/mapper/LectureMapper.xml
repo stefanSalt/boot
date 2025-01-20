@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.lecture.system.mapper.LectureMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lee.lecture.system.model.entity.Lecture">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="description" property="description" />
+        <result column="lecturer_id" property="lecturerId" />
+        <result column="location" property="location" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="capacity" property="capacity" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="cover_url" property="coverUrl" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, title, description, lecturer_id, location, start_time, end_time, capacity, status, create_time, update_time,cover_url
+    </sql>
+
+
+    <!-- 讲座信息表分页列表 -->
+    <select id="listPagedLectures" resultType="com.lee.lecture.system.model.entity.Lecture">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            lecture
+        <where>
+            <if test='queryParams.title!=null and queryParams.title.trim() neq ""'>
+                AND (
+                    title LIKE CONCAT('%',#{queryParams.title},'%')
+                )
+            </if>
+                    <if test='queryParams.lecturerId!=null'>
+                        AND (
+                        lecturer_id = #{queryParams.lecturerId}
+                        )
+                    </if>
+                            <if test='queryParams.status!=null'>
+                                AND (
+                                status = #{queryParams.status}
+                                )
+                            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+    <select id="selectExportList" resultType="com.lee.lecture.system.model.vo.LectureReservationExcelVO">
+        SELECT
+            u.nickname as user_name,
+            u.phone,
+            DATE_FORMAT(r.create_time, '%Y-%m-%d %H:%i:%s') as reserve_time,
+            CASE r.status
+                WHEN 1 THEN '已签到'
+                ELSE '未签到'
+                END as check_in_status,
+            DATE_FORMAT(r.create_time, '%Y-%m-%d %H:%i:%s') as check_in_time
+        FROM reservation r
+                 LEFT JOIN user u ON u.id = r.student_id
+        WHERE r.lecture_id = #{lectureId}
+        ORDER BY r.create_time DESC
+    </select>
+
+</mapper>
