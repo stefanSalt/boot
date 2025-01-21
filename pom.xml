@@ -7,11 +7,11 @@
     <!-- 定义 groupId，用于唯一标识包的命名空间 -->
     <groupId>com.lee</groupId>
 
-    <artifactId>lecture</artifactId>
+    <artifactId>questionnaire</artifactId>
 
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>lecture</name>
+    <name>questionnaire</name>
 
     <description>高校讲座预约系统</description>
 
@@ -180,7 +180,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.lee.lecture.LectureApplication</mainClass>
+                    <mainClass>com.lee.questionnaire.QuestionnaireApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>
