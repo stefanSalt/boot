@@ -3,19 +3,23 @@ package com.lee.questionnaire.system.service.impl;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lee.questionnaire.common.token.service.TokenService;
 import com.lee.questionnaire.system.mapper.QuestionMapper;
 import com.lee.questionnaire.system.mapper.QuestionOptionMapper;
-import com.lee.questionnaire.system.model.entity.Question;
-import com.lee.questionnaire.system.model.entity.QuestionOption;
-import com.lee.questionnaire.system.model.entity.Questionnaire;
+import com.lee.questionnaire.system.mapper.QuestionnaireTemplateMapper;
+import com.lee.questionnaire.system.model.entity.*;
 import com.lee.questionnaire.system.mapper.QuestionnaireMapper;
 import com.lee.questionnaire.system.service.QuestionnaireService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.lee.questionnaire.system.model.entity.Questionnaire;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +37,8 @@ public class QuestionnaireServiceImpl extends ServiceImpl<QuestionnaireMapper, Q
 
     private final QuestionMapper questionMapper;
     private final QuestionOptionMapper questionOptionMapper;
+    private final QuestionnaireTemplateMapper questionnaireTemplateMapper;
+    private final TokenService tokenService;
 
     /**
      * 获取问卷表分页列表
@@ -51,6 +57,26 @@ public class QuestionnaireServiceImpl extends ServiceImpl<QuestionnaireMapper, Q
 
         // 查询数据
         Page<Questionnaire> boPage = this.baseMapper.listPagedQuestionnaires(page, queryParams);
+
+        return boPage;
+    }
+    /**
+     * 获取问卷表分页列表
+     *
+     * @param queryParams 查询参数
+     * @param pageNum     页号
+     * @param pageSize    页大小
+     * @return {@link IPage<Questionnaire>} 问卷表分页列表
+     */
+    @Override
+    public IPage<Questionnaire> listFrontPagedQuestionnaires(Questionnaire queryParams, Integer pageNum, Integer pageSize) {
+
+
+        Page<Questionnaire> page = new Page<>(pageNum, pageSize);
+
+
+        // 查询数据
+        Page<Questionnaire> boPage = this.baseMapper.listFrontPagedQuestionnaires(page, queryParams);
 
         return boPage;
     }
@@ -76,8 +102,12 @@ public class QuestionnaireServiceImpl extends ServiceImpl<QuestionnaireMapper, Q
      */
     @Override
     @Transactional
-    public boolean saveQuestionnaire(Questionnaire formData) {
-
+    public Integer saveQuestionnaire(Questionnaire formData) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String token = request.getHeader("Authorization" );
+        token = token.replace("Bearer ", "");
+        Integer userId = tokenService.getUserIdFromToken(token);
+        formData.setCreatorId(userId);
         boolean save = this.save(formData);
         if (save) {
             // 保存新数据
@@ -86,15 +116,16 @@ public class QuestionnaireServiceImpl extends ServiceImpl<QuestionnaireMapper, Q
             questionMapper.saveBatch(questions);
             questions.forEach(question -> {
                 List<QuestionOption> options = question.getOptions();
-                options.forEach(questionOption -> questionOption.setQuestionId(question.getId()));
-                if (!options.isEmpty()){
+                if (CollectionUtils.isNotEmpty(options)){
+                    options.forEach(questionOption -> questionOption.setQuestionId(question.getId()));
                     questionOptionMapper.saveBatch(options);
                 }
+
 
             });
 
         }
-        return save;
+        return formData.getId();
     }
 
     /**
@@ -154,5 +185,44 @@ public class QuestionnaireServiceImpl extends ServiceImpl<QuestionnaireMapper, Q
         return this.removeByIds(idList);
     }
 
+    @Override
+    public boolean saveQuestionnaireByTemplate(Long id) {
+        //获取httprequest
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String token = request.getHeader("Authorization" );
+        token = token.replace("Bearer ", "");
+        Integer userId = tokenService.getUserIdFromToken(token);
 
+        QuestionnaireTemplate questionnaireTemplate = questionnaireTemplateMapper.selectById(id);
+        if (questionnaireTemplate != null) {
+            Questionnaire questionnaire = new Questionnaire();
+            questionnaire.setTitle(questionnaireTemplate.getTitle());
+            questionnaire.setDescription(questionnaireTemplate.getDescription());
+            questionnaire.setCreatorId(userId);
+        }
+        return false;
+    }
+
+
+    @Override
+    public boolean publishQuestionnaire(Long id) {
+        if (id != null) {
+            Questionnaire questionnaire = new Questionnaire();
+            questionnaire.setId(Math.toIntExact(id));
+            questionnaire.setStatus("PUBLISHED");
+            return this.updateById(questionnaire);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean closeQuestionnaire(Long id) {
+        if (id != null) {
+            Questionnaire questionnaire = new Questionnaire();
+            questionnaire.setId(Math.toIntExact(id));
+            questionnaire.setStatus("CLOSED");
+            return this.updateById(questionnaire);
+        }
+        return false;
+    }
 }

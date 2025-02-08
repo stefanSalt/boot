@@ -49,11 +49,11 @@
             <include refid="Base_Column_List"/>
             FROM questionnaire
         <where>
-<!--            <if test='queryParams.name!=null and queryParams.name.trim() neq ""'>-->
-<!--                AND (-->
-<!--                    name LIKE CONCAT('%',#{queryParams.name},'%')-->
-<!--                )-->
-<!--            </if>-->
+            <if test='queryParams.title!=null and queryParams.title.trim() neq ""'>
+                AND (
+                title LIKE CONCAT('%',#{queryParams.title},'%')
+                )
+            </if>
         </where>
         ORDER BY id DESC
     </select>
@@ -74,6 +74,23 @@
         left join question_option q3 on q2.id = q3.question_id
         where q1.id = #{id}
         order by q2.sort,q3.sort
+    </select>
+    <select id="listFrontPagedQuestionnaires"
+            resultType="com.lee.questionnaire.system.model.entity.Questionnaire">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM questionnaire
+
+        <where>
+            status != 'DRAFT'
+            <if test='queryParams.title!=null and queryParams.title.trim() neq ""'>
+                AND (
+                title LIKE CONCAT('%',#{queryParams.title},'%')
+                )
+            </if>
+
+        </where>
+        ORDER BY id DESC
     </select>
 
 </mapper>

@@ -2,7 +2,6 @@ package com.lee.questionnaire.system.service;
 
 import com.lee.questionnaire.system.model.entity.Questionnaire;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lee.questionnaire.system.model.entity.Questionnaire;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 /**
  * 问卷表 服务类
@@ -19,7 +18,7 @@ public interface QuestionnaireService extends IService<Questionnaire> {
      * @return
      */
     IPage<Questionnaire> listPagedQuestionnaires(Questionnaire queryParams, Integer pageNum, Integer pageSize);
-
+    IPage<Questionnaire> listFrontPagedQuestionnaires(Questionnaire queryParams, Integer pageNum, Integer pageSize);
 
     /**
      * 获取问卷表表单数据
@@ -36,7 +35,7 @@ public interface QuestionnaireService extends IService<Questionnaire> {
      * @param formData 问卷表表单对象
      * @return
      */
-    boolean saveQuestionnaire(Questionnaire formData);
+    Integer saveQuestionnaire(Questionnaire formData);
 
     /**
      * 修改问卷表
@@ -56,4 +55,9 @@ public interface QuestionnaireService extends IService<Questionnaire> {
      */
     boolean deleteQuestionnaires(String ids);
 
+    boolean saveQuestionnaireByTemplate(Long id);
+
+    boolean publishQuestionnaire(Long id);
+
+    boolean closeQuestionnaire(Long id);
 }

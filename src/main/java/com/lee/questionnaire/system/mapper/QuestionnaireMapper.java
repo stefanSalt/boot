@@ -26,4 +26,6 @@ public interface QuestionnaireMapper extends BaseMapper<Questionnaire> {
     Page<Questionnaire> listPagedQuestionnaires(Page<Questionnaire> page, Questionnaire queryParams);
 
     Questionnaire getQuestionnaireData(Long id);
+
+    Page<Questionnaire> listFrontPagedQuestionnaires(Page<Questionnaire> page, Questionnaire queryParams);
 }
