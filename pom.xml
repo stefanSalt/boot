@@ -7,13 +7,13 @@
     <!-- 定义 groupId，用于唯一标识包的命名空间 -->
     <groupId>com.lee</groupId>
 
-    <artifactId>questionnaire</artifactId>
+    <artifactId>elder_care</artifactId>
 
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>questionnaire</name>
+    <name>elder_care</name>
 
-    <description>高校讲座预约系统</description>
+    <description>社区养老管理系统</description>
 
     <properties>
         <java.version>17</java.version>
@@ -180,7 +180,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.lee.questionnaire.QuestionnaireApplication</mainClass>
+                    <mainClass>com.lee.ElderCareApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>

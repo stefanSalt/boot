@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.system.mapper.ActivityMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lee.system.model.entity.Activity">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="image" property="image" />
+        <result column="description" property="description" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, image, description, start_time, end_time, status, create_time, update_time
+    </sql>
+
+
+    <!-- 活动表分页列表 -->
+    <select id="listPagedActivitys" resultType="com.lee.system.model.entity.Activity">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            activity
+        <where>
+            <if test='queryParams.name!=null and queryParams.name.trim() neq ""'>
+                AND (
+                    name LIKE CONCAT('%',#{queryParams.name},'%')
+                )
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+</mapper>

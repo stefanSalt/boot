@@ -1,5 +1,5 @@
 spring:
   application:
-    name: lecture
+    name: care
   profiles:
     active: dev

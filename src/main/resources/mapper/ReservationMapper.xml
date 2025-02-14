@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.system.mapper.ReservationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lee.system.model.entity.Reservation">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="service_id" property="serviceId" />
+        <result column="status" property="status" />
+       <result column="remark" property="remark" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <association property="user" javaType="com.lee.system.model.entity.User">
+            <id column="user_id" property="id" />
+            <result column="nickname" property="nickname" />
+        </association>
+        <association property="service" javaType="com.lee.system.model.entity.ServiceInfo">
+            <id column="service_id" property="id" />
+            <result column="service_name" property="name" />
+            <result column="service_image" property="image" />
+            <result column="service_create_time" property="createTime"/>
+            <result column="service_update_time" property="updateTime"/>
+        </association>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id, service_id, status,remark, create_time, update_time
+    </sql>
+
+
+    <!-- 预约记录表分页列表 -->
+    <select id="listPagedReservations" resultMap="BaseResultMap">
+        SELECT
+            r.id as id,
+            r.user_id as user_id,
+            u.nickname as nickname,
+            r.service_id as service_id,
+            s.name as service_name,
+            s.image as service_image,
+            s.create_time as service_create_time,
+            r.status as status,
+            r.remark as remark,
+            r.create_time as create_time,
+            r.update_time as update_time
+
+        FROM
+            reservation r
+        LEFT JOIN user u ON r.user_id = u.id
+        LEFT JOIN service_info s ON r.service_id = s.id
+        <where>
+            <if test='queryParams.userId!=null '>
+                AND (
+                    r.user_id = #{queryParams.userId}
+                )
+            </if>
+            <if test='queryParams.serviceId!=null '>
+                AND (
+                    r.service_id = #{queryParams.serviceId}
+                )
+            </if>
+            <if test='queryParams.status!=null '>
+                AND (
+                    r.status = #{queryParams.status}
+                )
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.system.mapper.ActivityRegistrationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lee.system.model.entity.ActivityRegistration">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="activity_id" property="activityId" />
+        <result column="status" property="status" />
+
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <association property="user" javaType="com.lee.system.model.entity.User">
+            <id column="user_id" property="id" />
+            <result column="nickname" property="nickname" />
+        </association>
+        <association property="activity" javaType="com.lee.system.model.entity.Activity">
+            <id column="activity_id" property="id" />
+            <result column="activity_start_time" property="startTime" />
+            <result column="activity_end_time" property="endTime" />
+            <result property="image" column="activity_image"/>
+
+            <result column="activity_name" property="name" />
+        </association>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id, activity_id, status, create_time, update_time
+    </sql>
+
+
+    <!-- 活动报名表分页列表 -->
+    <select id="listPagedActivityRegistrations" resultMap="BaseResultMap">
+        SELECT
+            ar.id AS id,
+            ar.user_id AS user_id,
+            u.nickname AS nickname,
+            ar.activity_id AS activity_id,
+            a.name AS activity_name,
+            a.start_time AS activity_start_time,
+            a.end_time AS activity_end_time,
+            a.image AS activity_image,
+            ar.status AS status
+
+        from activity_registration ar
+        LEFT JOIN user u ON ar.user_id = u.id
+        LEFT JOIN activity a ON ar.activity_id = a.id
+        <where>
+            <if test='queryParams.userId!=null '>
+                AND (
+                    ar.user_id = #{queryParams.userId}
+                )
+            </if>
+            <if test='queryParams.activityId!=null '>
+                AND (
+                    ar.activity_id = #{queryParams.activityId}
+                )
+            </if>
+            <if test='queryParams.status!=null '>
+                AND (
+                    ar.status = #{queryParams.status}
+                )
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+</mapper>

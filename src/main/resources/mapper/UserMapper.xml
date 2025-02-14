@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lee.questionnaire.system.mapper.UserMapper">
+<mapper namespace="com.lee.system.mapper.UserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.lee.questionnaire.system.model.entity.User">
+    <resultMap id="BaseResultMap" type="com.lee.system.model.entity.User">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="nickname" property="nickname"/>
@@ -16,16 +16,17 @@
         <result column="gender" property="gender"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
+        <result column="address" property="address"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, username, nickname, phone, email, password, role, create_time, update_time,avatar,status,gender
+        id, username, nickname, phone, email, password, role, create_time, update_time,avatar,status,gender,address
     </sql>
 
 
     <!-- 用户信息分页列表 -->
-    <select id="listPagedUsers" resultType="com.lee.questionnaire.system.model.entity.User">
+    <select id="listPagedUsers" resultType="com.lee.system.model.entity.User">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -60,7 +61,7 @@
         </where>
         ORDER BY id DESC
     </select>
-    <select id="listUserOptions" resultType="com.lee.questionnaire.system.model.entity.User">
+    <select id="listUserOptions" resultType="com.lee.system.model.entity.User">
         SELECT
         id, nickname
         FROM
